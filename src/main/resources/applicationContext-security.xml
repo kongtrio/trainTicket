@@ -13,6 +13,7 @@
         <intercept-url pattern="/admin/train/getSites" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/tourist" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/tourist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/tourist/order" access="ROLE_USER"/>
         <intercept-url pattern="/user" access="ROLE_USER"/>
         <intercept-url pattern="/user/**" access="ROLE_USER"/>
         <intercept-url pattern="/genal/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>

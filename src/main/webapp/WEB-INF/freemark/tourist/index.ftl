@@ -15,6 +15,8 @@
         </ul>
     </div>
     <div class="span9">
+        <form id="order_form" class="form-search" method="post" action="${basePath}/tourist/order">
+        </form>
         <form class="form-search" method="post" action="${basePath}/tourist">
             <input class="input-medium search-query" id="begin_site" name="beginSite" type="text"
                    value="<#if param??>${param.beginSite!""}</#if>" placeholder="起始站"/>
@@ -64,7 +66,7 @@
                     <td>${trainReport.endTime!""}</td>
                     <td>${trainReport.useTime!""}</td>
                     <td>${trainReport.trainDetail.seatNumber!""}</td>
-                    <td>删除</td>
+                    <td><a href="#" onclick="orderTicket()">预订</a></td>
                 </tr>
                 </#list>
             </#if>
@@ -116,5 +118,7 @@
         }
     });
     $("#time").datepicker({"dateFormat": "yy-mm-dd", minDate: 0, maxDate: "+2M"});
-
+    function orderTicket(){
+        $("#order_form").submit();
+    }
 </script>

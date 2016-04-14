@@ -61,65 +61,31 @@
 
             <div class="nav-collapse collapse navbar-responsive-collapse">
                 <ul class="nav">
-                    <li <#if fullpath?contains("tourist")>class="active"</#if>">
+                    <li <#if fullpath?contains("tourist")>class="active"</#if>>
                         <a href="${basePath}/tourist">购票</a>
                     </li>
                     <li <#if fullpath?contains("user")>class="active"</#if>>
                         <a href="${basePath}/user">用户中心</a>
                     </li>
-                    <li <#if fullpath?contains("notify")>class="active"</#if>">
+                    <li <#if fullpath?contains("notify")>class="active"</#if>>
                         <a href="${basePath}/notify">通知公告</a>
                     </li>
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">下拉菜单<strong
-                                class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">下拉导航1</a>
-                            </li>
-                            <li>
-                                <a href="#">下拉导航2</a>
-                            </li>
-                            <li>
-                                <a href="#">其他</a>
-                            </li>
-                            <li class="divider">
-                            </li>
-                            <li class="nav-header">
-                                标签
-                            </li>
-                            <li>
-                                <a href="#">链接1</a>
-                            </li>
-                            <li>
-                                <a href="#">链接2</a>
-                            </li>
-                        </ul>
+                    <li <#if fullpath?contains("notify")>class="active"</#if>>
+                        <a href="${basePath}/notify">投诉建议</a>
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li>
-                        <a href="#">右边链接</a>
-                    </li>
                     <li class="divider-vertical">
                     </li>
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">下拉菜单<strong
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">改签退票<strong
                                 class="caret"></strong></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">下拉导航1</a>
+                                <a href="#">改签</a>
                             </li>
                             <li>
-                                <a href="#">下拉导航2</a>
-                            </li>
-                            <li>
-                                <a href="#">其他</a>
-                            </li>
-                            <li class="divider">
-                            </li>
-                            <li>
-                                <a href="#">链接3</a>
+                                <a href="#">退票</a>
                             </li>
                         </ul>
                     </li>

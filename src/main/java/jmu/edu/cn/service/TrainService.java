@@ -43,15 +43,29 @@ public class TrainService {
     //找出所有有经过这两个站点的列车后,在排除掉那些方向不对的列车,剩下的就是可以搭乘的所有列车
     public List<TrainReport> getTrainDetailList(final String beginSite, String endSite, String time) {
         List<Sites> sites = sitesService.findBySites(Lists.newArrayList(beginSite, endSite));
+        if (sites == null || sites.size() != 2) {
+            return null;
+        }
         List<TrainSite> trainSiteList = findBySiteList(sites);
         if (trainSiteList == null) {
             return null;
         }
+        //某辆列车必须同时包含这两个站点,才将它加入list中
         List<Train> trains = Lists.newArrayList();
         for (TrainSite trainSite : trainSiteList) {
-            trains.add(trainSite.getTrain());
+            Train train = trainSite.getTrain();
+            List<TrainSite> trainSites = train.getTrainSites();
+            List<String> tmpSite = Lists.newArrayList();
+            for (TrainSite trainSite1 : trainSites) {
+                tmpSite.add(trainSite1.getSite().getSite());
+            }
+            if (tmpSite.containsAll(Lists.newArrayList(beginSite, endSite))) {
+                trains.add(train);
+            }
         }
-
+        if (CollectionUtils.isEmpty(trains)) {
+            return null;
+        }
         Date date = DateUtil.parseDate(time, "yyyy-MM-dd");
         List<TrainDetail> trainDetailByTrains = findByTrains(trains, date);
         //将查到的数据填充到report里面,方便等会页面展示

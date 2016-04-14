@@ -54,4 +54,9 @@ public class GenalController extends BaseController {
         Users users = usersService.findByUsername(username);
         return users == null ? "true" : "false";
     }
+
+    @RequestMapping(value = "/pageNotFount")
+    public String pageNotFount() {
+        return "redirect:/genal/404";
+    }
 }
