@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <proproty></proproty>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--<Encoding>UTF-8</Encoding>-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{HH:mm:ss.SSS} %-5level %logger{80}:%L - %msg%n</Pattern>
+            <!--<charset>UTF-8</charset>-->
+        </encoder>
+    </appender>
+    <!-- 不同級別的文件記錄在不同的日誌文件中 -->
+    <appender name="FILEINFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <file>e:/log/log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--在工程目录下自动生成logs文件夹 -->
+            <FileNamePattern>e:/log/log-info.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 最多30个文件 -->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50}:%L - %msg%n
+            </pattern>
+        </layout>
+        <!-- 过滤器，只记录INFO级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="FILEERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--在工程目录下自动生成logs文件夹 -->
+            <FileNamePattern>e:/log/log-error.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 最多30个文件 -->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50}:%L - %msg%n
+            </pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILEINFO" />
+        <appender-ref ref="FILEERROR" />
+    </root>
+</configuration>  

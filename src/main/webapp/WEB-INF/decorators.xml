@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<decorators defaultdir="/WEB-INF/freemark">
+    <excludes>
+        <pattern>/image/**</pattern>
+        <pattern>/css/**</pattern>
+        <pattern>/js/**</pattern>
+        <pattern>/bootstrap-3.3.5-dist/**</pattern>
+        <pattern>/genal/**</pattern>
+    </excludes>
+
+    <decorator name="user" page="decorator_user.ftl">
+        <pattern>/user</pattern>
+        <pattern>/user/**</pattern>
+    </decorator>
+
+    <decorator name="tourist" page="decorator_tourist.ftl">
+        <pattern>/tourist</pattern>
+        <pattern>/tourist/**</pattern>
+        <pattern>/notify**</pattern>
+    </decorator>
+
+    <decorator name="admin" page="decorator_admin.ftl">
+        <pattern>/admin</pattern>
+        <pattern>/admin/**</pattern>
+    </decorator>
+</decorators>
