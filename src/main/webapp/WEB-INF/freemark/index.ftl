@@ -5,5 +5,5 @@
         password:<input name="pwd"/><br/>
         <input type="submit" value="login"/>
     </form>
-    <a href="${basePath}/j_spring_security_logout">登出</a>
+
 </div>

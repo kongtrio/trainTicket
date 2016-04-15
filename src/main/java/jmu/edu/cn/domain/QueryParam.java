@@ -11,7 +11,15 @@ public class QueryParam {
     private String searchKey;
     private String beginSite;
     private String endSite;
+    private String datefrom;
+    private String dateto;
+    private String beginTime;
+    private String endTime;
+    private String useTime;
+    private long id;
+    private long trainDetailId;
     private String time;
+    private String contactIds;
 
     public String getSearchKey() {
         return searchKey;
@@ -75,5 +83,69 @@ public class QueryParam {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDatefrom() {
+        return datefrom;
+    }
+
+    public void setDatefrom(String datefrom) {
+        this.datefrom = datefrom;
+    }
+
+    public String getDateto() {
+        return dateto;
+    }
+
+    public void setDateto(String dateto) {
+        this.dateto = dateto;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(String useTime) {
+        this.useTime = useTime;
+    }
+
+    public long getTrainDetailId() {
+        return trainDetailId;
+    }
+
+    public void setTrainDetailId(long trainDetailId) {
+        this.trainDetailId = trainDetailId;
+    }
+
+    public String getContactIds() {
+        return contactIds;
+    }
+
+    public void setContactIds(String contactIds) {
+        this.contactIds = contactIds;
+    }
+
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

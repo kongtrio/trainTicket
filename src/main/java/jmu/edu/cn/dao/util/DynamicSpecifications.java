@@ -81,6 +81,12 @@ public final class DynamicSpecifications {
                     case NIN:
                         predicate = builder.not(expression.in((List) value));
                         break;
+                    case ILIKE:
+                        predicate = builder.notLike(expression, "%" + value + "%");
+                        break;
+                    case LIKEIGNORECASE:
+                        predicate = builder.like(builder.lower(expression), "%" + StringUtils.lowerCase(value.toString()) + "%");
+                        break;
                     default:
                         break;
                 }

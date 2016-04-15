@@ -75,6 +75,20 @@
                     </li>
                 </ul>
                 <ul class="nav pull-right">
+
+                <#if user??>
+                    <li>
+                        <a href="${basePath}/user">${user.userName}您好,欢迎使用本系统</a>
+                    </li>
+                    <li>
+                        <a href="${basePath}/j_spring_security_logout">注销</a>
+                    </li>
+                <#else>
+                    <li>
+                        <a href="${basePath}/genal/login">登录</a>
+                    </li>
+                </#if>
+
                     <li class="divider-vertical">
                     </li>
                     <li class="dropdown">

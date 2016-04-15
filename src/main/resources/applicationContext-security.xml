@@ -9,21 +9,21 @@
     <http pattern="/image/**" security="none"/>
     <http pattern="/js/**" security="none"/>
 
-    <http auto-config="true" access-denied-page="/test/deny">
+    <http auto-config="true" access-denied-page="/accessDeniedPage">
         <intercept-url pattern="/admin/train/getSites" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/tourist/order" access="ROLE_USER"/>
         <intercept-url pattern="/tourist" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/tourist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/tourist/order" access="ROLE_USER"/>
         <intercept-url pattern="/user" access="ROLE_USER"/>
         <intercept-url pattern="/user/**" access="ROLE_USER"/>
         <intercept-url pattern="/genal/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/admin/**" access="ROLE_ADMIN"/>
 
         <!--default-target-url="/home/loginSuccess.action"(登录成功的url)-->
-        <form-login login-page="/genal/login" />
+        <form-login login-page="/genal/login"/>
 
         <logout invalidate-session="true"
-                logout-success-url="/test/succes"/>
+                logout-success-url="/"/>
 
         <!-- SESSION超时后跳转到该页面 -->
         <!-- <session-management invalid-session-url="/timeout.jsp"> </session-management> -->
@@ -45,6 +45,7 @@
     <!-- 登录成功 -->
     <b:bean id="loginSuccessHandle"
             class="jmu.edu.cn.filter.LoginSuccessHandle">
+        <b:property name="defaultTargetUrl" value="/"></b:property>
     </b:bean>
 
     <!-- 登录失败 -->

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>后台管理系统</title>
+    <title>火车票订票系统</title>
     <link rel="stylesheet" href="${basePath}/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
     <link rel="stylesheet" href="${basePath}/css/tourist.css">
     <script src="${basePath}/js/jquery.js"></script>
@@ -12,7 +12,6 @@
     <script>
         (function ($) {
             $(window).load(function () {
-
                 $("a[rel='load-content']").click(function (e) {
                     e.preventDefault();
                     var url = $(this).attr("href");

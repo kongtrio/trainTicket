@@ -141,10 +141,13 @@
 
             <div class="hero-unit">
                 <h1>
-                    404!
+                    500错误!
                 </h1>
                 <p>
-                    报错,找不到找个网页.
+                    后台报错了,请联系程序猿哥哥修复一下吧。.
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-large" href="#">参看更多 »</a>
                 </p>
             </div>
 

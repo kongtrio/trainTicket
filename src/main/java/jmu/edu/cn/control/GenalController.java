@@ -27,6 +27,10 @@ public class GenalController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String msg, Model model) {
+        Object user = request.getSession().getAttribute("user");
+        if (user != null) {
+            return "redirect:/tourist";
+        }
         if ("errorUser".equals(msg)) {
             msg = "用户名或者密码错误";
         } else if ("registerSuc".equals(msg)) {
@@ -53,10 +57,5 @@ public class GenalController extends BaseController {
     public String checkUsernameExist(String username) {
         Users users = usersService.findByUsername(username);
         return users == null ? "true" : "false";
-    }
-
-    @RequestMapping(value = "/pageNotFount")
-    public String pageNotFount() {
-        return "redirect:/genal/404";
     }
 }

@@ -8,13 +8,13 @@ import java.util.Map.Entry;
 
 public class SearchFilter {
     /**
-     * 多个属性用OR的分隔符
+     * 多个属性间OR关系的分隔符.
      */
     public static final String OR_SEPARATOR = "_OR_";
     public static final String JOIN_SEPARATOR = "_JOIN_";
 
     public enum Operator {
-        EQ, LIKE, GT, LT, GTE, LTE, AT, NAT, IN, ILIKE, NEQ, NIN
+        EQ, LIKE, GT, LT, GTE, LTE, AT, NAT, IN, ILIKE, NEQ, NIN, LIKEIGNORECASE, EQIGCASE
     }
 
     public String fieldName;
@@ -34,6 +34,7 @@ public class SearchFilter {
         Map<String, SearchFilter> filters = Maps.newHashMap();
 
         for (Entry<String, Object> entry : searchParams.entrySet()) {
+            // 过滤掉空值
             String key = entry.getKey();
             Object value = entry.getValue();
             if (value instanceof String && StringUtils.isBlank((String) value)) {

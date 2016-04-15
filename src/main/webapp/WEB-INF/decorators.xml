@@ -9,13 +9,11 @@
     </excludes>
 
     <decorator name="user" page="decorator_user.ftl">
-        <pattern>/user</pattern>
-        <pattern>/user/**</pattern>
+        <pattern>/user*</pattern>
     </decorator>
 
     <decorator name="tourist" page="decorator_tourist.ftl">
-        <pattern>/tourist</pattern>
-        <pattern>/tourist/**</pattern>
+        <pattern>/tourist**</pattern>
         <pattern>/notify**</pattern>
     </decorator>
 

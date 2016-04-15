@@ -16,6 +16,12 @@
     </div>
     <div class="span9">
         <form id="order_form" class="form-search" method="post" action="${basePath}/tourist/order">
+            <input type="hidden" id="o_begin_site" name="beginSite"/>
+            <input type="hidden" id="o_end_site" name="endSite"/>
+            <input type="hidden" id="o_begin_time" name="beginTime"/>
+            <input type="hidden" id="o_end_time" name="endTime"/>
+            <input type="hidden" id="o_use_time" name="useTime"/>
+            <input type="hidden" id="traindetail_id" name="id"/>
         </form>
         <form class="form-search" method="post" action="${basePath}/tourist">
             <input class="input-medium search-query" id="begin_site" name="beginSite" type="text"
@@ -66,7 +72,10 @@
                     <td>${trainReport.endTime!""}</td>
                     <td>${trainReport.useTime!""}</td>
                     <td>${trainReport.trainDetail.seatNumber!""}</td>
-                    <td><a href="#" onclick="orderTicket()">预订</a></td>
+                    <td><a href="#"
+                           onclick="orderTicket('${trainReport.beginSite!""}','${trainReport.endSite!""}',
+                                   '${trainReport.beginTime!""}','${trainReport.endTime!""}','${trainReport.useTime!""}',
+                                   '${trainReport.trainDetail.train.id!""}')">预订</a></td>
                 </tr>
                 </#list>
             </#if>
@@ -118,7 +127,15 @@
         }
     });
     $("#time").datepicker({"dateFormat": "yy-mm-dd", minDate: 0, maxDate: "+2M"});
-    function orderTicket(){
+    function orderTicket(beginSite, endSite, beginTime, endTime, useTime, id) {
+        beginTime = $("#time").val() + " " + beginTime;
+        endTime = $("#time").val() + " " + endTime;
+        $("#o_begin_site").val(beginSite);
+        $("#o_end_site").val(endSite);
+        $("#o_begin_time").val(beginTime);
+        $("#o_end_time").val(endTime);
+        $("#o_use_time").val(useTime);
+        $("#traindetail_id").val(id);
         $("#order_form").submit();
     }
 </script>

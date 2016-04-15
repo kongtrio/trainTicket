@@ -16,6 +16,11 @@ import java.util.List;
 public class Orders extends IdEntity {
     private Date time;
     private Date beginTime;
+    private Date endTime;
+    private String beginSite;
+    private String endSite;
+    private String useTime;
+    private float price;
     private String seatSerial;
     private int status;
     private Users users;
@@ -66,14 +71,58 @@ public class Orders extends IdEntity {
         this.users = users;
     }
 
+    @Column(name = "end_time")
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    @Column(name = "begin_site")
+    public String getBeginSite() {
+        return beginSite;
+    }
+
+    public void setBeginSite(String beginSite) {
+        this.beginSite = beginSite;
+    }
+
+    @Column(name = "end_site")
+    public String getEndSite() {
+        return endSite;
+    }
+
+    public void setEndSite(String endSite) {
+        this.endSite = endSite;
+    }
+
+    @Column(name = "use_time")
+    public String getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(String useTime) {
+        this.useTime = useTime;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     @OneToMany(targetEntity = OrdersDetail.class, mappedBy = "orders")
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    public List<OrdersDetail> getOrdersDetail() {
+    public List<OrdersDetail> getOrdersDetails() {
         return ordersDetails;
     }
 
-    public void setOrdersDetail(List<OrdersDetail> ordersDetail) {
-        this.ordersDetails = ordersDetail;
+    public void setOrdersDetails(List<OrdersDetail> ordersDetails) {
+        this.ordersDetails = ordersDetails;
     }
 
     @ManyToOne(targetEntity = TrainDetail.class)

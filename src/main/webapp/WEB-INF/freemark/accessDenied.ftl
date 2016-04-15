@@ -1,19 +1,14 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <%
-        String path = request.getContextPath();
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path ;
-    %>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>404错误</title>
-    <link rel="stylesheet" href="<%=basePath%>/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
-    <link rel="stylesheet" href="<%=basePath%>/css/tourist.css">
-    <script src="<%=basePath%>/js/jquery.js"></script>
-    <script src="<%=basePath%>/js/market/common.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/js/Validform_v5.3.2_min.js"></script>
-    <script src="<%=basePath%>/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <meta charset="utf-8"/>
+    <title>火车票订票系统</title>
+    <link rel="stylesheet" href="${basePath}/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="${basePath}/css/tourist.css">
+    <script src="${basePath}/js/jquery.js"></script>
+    <script src="${basePath}/js/market/common.js"></script>
+    <script type="text/javascript" src="${basePath}/js/Validform_v5.3.2_min.js"></script>
+    <script src="${basePath}/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
     <script>
         (function ($) {
             $(window).load(function () {
@@ -52,7 +47,7 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="item">
-                        <img alt="" src="<%=basePath%>/image/background.png"/>
+                        <img alt="" src="${basePath}/image/background.png"/>
 
                         <div class="carousel-caption">
                             <h4>
@@ -65,7 +60,7 @@
                         </div>
                     </div>
                     <div class="item active">
-                        <img alt="" src="<%=basePath%>/image/background.png"/>
+                        <img alt="" src="${basePath}/image/background.png"/>
 
                         <div class="carousel-caption">
                             <h4>
@@ -78,7 +73,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img alt="" src="<%=basePath%>/image/background.png"/>
+                        <img alt="" src="${basePath}/image/background.png"/>
 
                         <div class="carousel-caption">
                             <h4>
@@ -100,24 +95,38 @@
                     <div class="container-fluid">
                         <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span
                                 class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
-                        <a href="<%=basePath%>/tourist" class="brand">火车票订票系统</a>
+                        <a href="${basePath}/tourist" class="brand">火车票订票系统</a>
 
                         <div class="nav-collapse collapse navbar-responsive-collapse">
                             <ul class="nav">
-                                <li>
-                                <a href="<%=basePath%>/tourist">购票</a>
+                                <li <#if fullpath?contains("tourist")>class="active"</#if>>
+                                    <a href="${basePath}/tourist">购票</a>
                                 </li>
-                                <li>
-                                <a href="<%=basePath%>/user">用户中心</a>
+                                <li <#if fullpath?contains("user")>class="active"</#if>>
+                                    <a href="${basePath}/user">用户中心</a>
                                 </li>
-                                <li>
-                                <a href="<%=basePath%>/notify">通知公告</a>
+                                <li <#if fullpath?contains("notify")>class="active"</#if>>
+                                    <a href="${basePath}/notify">通知公告</a>
                                 </li>
-                                <li>
-                                <a href="<%=basePath%>/notify">投诉建议</a>
+                                <li <#if fullpath?contains("notify")>class="active"</#if>>
+                                    <a href="${basePath}/notify">投诉建议</a>
                                 </li>
                             </ul>
                             <ul class="nav pull-right">
+
+                            <#if user??>
+                                <li>
+                                    <a href="${basePath}/user">${user.userName}您好,欢迎使用本系统</a>
+                                </li>
+                                <li>
+                                    <a href="${basePath}/j_spring_security_logout">注销</a>
+                                </li>
+                            <#else>
+                                <li>
+                                    <a href="${basePath}/genal/login">登录</a>
+                                </li>
+                            </#if>
+
                                 <li class="divider-vertical">
                                 </li>
                                 <li class="dropdown">
@@ -138,16 +147,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="hero-unit">
                 <h1>
-                    404!
+                    对不起,您没有权限访问该地址。
                 </h1>
                 <p>
-                    报错,找不到找个网页.
+                    <a href="${basePath}/j_spring_security_logout">注销后换个账号登录?</a>
                 </p>
             </div>
-
             <div class="row-fluid">
                 <div class="span12" style="margin-top: 30px;text-align: center;background-color: dimgrey;">
                     <address>
@@ -160,4 +167,12 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var notifyMsg = '${notifyMsg!""}';
+    console.log("notify==" + notifyMsg);
+    if (notifyMsg.trim() != "") {
+        console.log(notifyMsg);
+        alert(notifyMsg);
+    }
+</script>
 </html>
