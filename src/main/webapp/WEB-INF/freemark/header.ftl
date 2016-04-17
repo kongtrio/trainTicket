@@ -70,8 +70,8 @@
                     <li <#if fullpath?contains("notify")>class="active"</#if>>
                         <a href="${basePath}/notify">通知公告</a>
                     </li>
-                    <li <#if fullpath?contains("notify")>class="active"</#if>>
-                        <a href="${basePath}/notify">投诉建议</a>
+                    <li <#if fullpath?contains("advice")>class="active"</#if>>
+                        <a href="${basePath}/advice">投诉建议</a>
                     </li>
                 </ul>
                 <ul class="nav pull-right">

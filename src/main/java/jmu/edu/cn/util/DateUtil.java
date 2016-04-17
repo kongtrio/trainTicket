@@ -445,6 +445,15 @@ public final class DateUtil {
     }
 
     /**
+     * @param timeStr 必须符合  yyyy-MM-dd
+     * @return
+     */
+    public static boolean isToday(String timeStr) {
+        Date date = parseDate(timeStr, "yyyy-MM-dd");
+        return date.getTime() == todayBeginTime();
+    }
+
+    /**
      * @param timeStr 必须符合  HH:mm:ss
      * @return
      */

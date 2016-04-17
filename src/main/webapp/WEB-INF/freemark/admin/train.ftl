@@ -143,7 +143,9 @@
 <#--<script src="${basePath}/js/jquery.timepicker.js"></script>-->
 <script type="text/javascript">
     var query_username = $("#query_username").val();
+<#if trains??>
     initPagesWithClick("pageColumn",${trains.number},${trains.totalPages}, pageClickEvent);
+</#if>
     //    $('#testTime').timepicker();
     $("#query_username").change(function () {
         $("#pageNo").val(1);

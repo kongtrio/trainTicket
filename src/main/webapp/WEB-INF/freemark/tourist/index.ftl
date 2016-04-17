@@ -22,6 +22,7 @@
             <input type="hidden" id="o_end_time" name="endTime"/>
             <input type="hidden" id="o_use_time" name="useTime"/>
             <input type="hidden" id="traindetail_id" name="id"/>
+            <input type="hidden" id="orderId" name="orderId" value="<#if orderId?? && orderId!=0>${orderId}<#else>0</#if>"/>
         </form>
         <form class="form-search" method="post" action="${basePath}/tourist">
             <input class="input-medium search-query" id="begin_site" name="beginSite" type="text"
@@ -30,8 +31,12 @@
                    value="<#if param??>${param.endSite!""}</#if>" placeholder="终点站"/>
             <input class="input-medium search-query" type="text" id="time" name="time" placeholder="时间"
                    value="<#if param??>${param.time!""}<#else>${date!''}</#if>" readonly="readonly"/>
+            <input type="hidden" id="orderId" name="orderId" value="<#if orderId??>${orderId}<#else>0</#if>"/>
             <button type="submit" class="btn">查找对应车辆</button>
+        <#if orderId?? && orderId!=0> <span style="float: right;color:red;font-size: 20px">改签车票</span></#if>
+
         </form>
+    <#if trains?? && trains?size gt 0>
         <table class="table">
             <thead>
             <tr>
@@ -62,7 +67,6 @@
             </tr>
             </thead>
             <tbody>
-            <#if trains??>
                 <#list trains as trainReport>
                 <tr>
                     <td>${trainReport.trainDetail.train.trainSerial!""}</td>
@@ -75,10 +79,10 @@
                     <td><a href="#"
                            onclick="orderTicket('${trainReport.beginSite!""}','${trainReport.endSite!""}',
                                    '${trainReport.beginTime!""}','${trainReport.endTime!""}','${trainReport.useTime!""}',
-                                   '${trainReport.trainDetail.train.id!""}')">预订</a></td>
+                                   '${trainReport.trainDetail.id!""}')"><#if orderId?? && orderId!=0>改签<#else>
+                        预订</#if></a></td>
                 </tr>
                 </#list>
-            </#if>
             <#--<tr class="success">-->
             <#--<td>-->
             <#--1-->
@@ -107,6 +111,9 @@
             <#--</tr>-->
             </tbody>
         </table>
+    <#else>
+        <h3>没有找到列车</h3>
+    </#if>
     </div>
 </div>
 <script src="${basePath}/js/jquery-ui/jquery-ui.js"></script>

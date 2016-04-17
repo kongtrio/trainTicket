@@ -25,7 +25,7 @@ public class UserController extends BaseController {
     private UsersService usersService;
 
     @RequestMapping(value = "")
-    public String index(QueryParam queryParam, String msg, Model model) {
+    public String index(@ModelAttribute("msg") String msg, Model model) {
         Users user = (Users) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
         return "/user/index";
@@ -40,12 +40,12 @@ public class UserController extends BaseController {
     public String updateContact(RedirectAttributes model, String oldPassword, String password) {
         Users user = (Users) request.getSession().getAttribute("user");
         if (!user.getPassword().equals(oldPassword)) {
-            model.addFlashAttribute("notifyMsg", "旧密码错误");
+            model.addFlashAttribute("msg", "旧密码错误");
             return "redirect:/user/alterPassword";
         }
         user.setPassword(password);
         usersService.save(user);
-        model.addFlashAttribute("notifyMsg", "密码修改成功");
+        model.addFlashAttribute("msg", "密码修改成功");
         return "redirect:/user";
     }
 }

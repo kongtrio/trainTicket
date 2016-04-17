@@ -14,6 +14,7 @@ import java.util.Date;
 public class OrdersDetail extends IdEntity {
     private Orders orders;
     private Contact contact;
+    private String seatSerial;
 
     @ManyToOne(targetEntity = Orders.class)
     @JoinColumn(name = "order_id", updatable = false)
@@ -35,5 +36,12 @@ public class OrdersDetail extends IdEntity {
         this.contact = contact;
     }
 
+    @Column(name = "seat_serial")
+    public String getSeatSerial() {
+        return seatSerial;
+    }
 
+    public void setSeatSerial(String seatSerial) {
+        this.seatSerial = seatSerial;
+    }
 }

@@ -1,6 +1,7 @@
 package jmu.test;
 
 import com.google.common.collect.Lists;
+import jmu.edu.cn.dao.OrdersDetailDao;
 import jmu.edu.cn.domain.*;
 import jmu.edu.cn.service.*;
 import org.junit.Test;
@@ -31,26 +32,17 @@ public class UsersTest {
     private SitesService sitesService;
     @Autowired
     private NotifyService notifyService;
-
+    @Autowired
+    private OrdersDetailDao ordersDetailDao;
     @Test
-    public void testGetById() {
-        System.out.println("begin--------------------");
-        Users users = new Users();
-        users.setUserName("111");
-        users.setPassword("222");
-        usersService.save(users);
-    }
-
-    @Test
-    @Transactional(rollbackFor = Exception.class)
     public void testGetByIds() {
-        Users users = usersService.getById(1);
-        System.out.println("begin--------------------");
+        ordersDetailDao.delete(37l);
     }
 
     @Test
 //    @Transactional(rollbackFor = Exception.class)
     public void getTrain() {
+        ordersService.update(10l);
 //        List<TrainDetail> trainDetailList = trainService.getTrainDetailList("福州站", "厦门站", "");
 //        System.out.println("begin--------------------");
     }

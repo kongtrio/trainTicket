@@ -5,6 +5,7 @@
     <title>火车票订票系统</title>
     <meta name="author" content="DeathGhost"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/jquery-ui.css">
     <!--[if lt IE 9]>
     <script src="${basePath}/js/html5.js"></script>
     <![endif]-->
@@ -12,6 +13,7 @@
     <script src="${basePath}/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="${basePath}/js/market/common.js"></script>
     <script type="text/javascript" src="${basePath}/js/Validform_v5.3.2_min.js"></script>
+    <script src="${basePath}/js/jquery-ui/jquery-ui.js"></script>
     <script>
         (function ($) {
             $(window).load(function () {
@@ -69,7 +71,8 @@
                        <#if fullpath?contains("admin/sites")>class="active"</#if>>站点信息</a></dd>
                 <dd><a href="${basePath}/admin/addTrain" <#if fullpath?contains("admin/addTrain")>class="active"</#if>>添加一班列车</a>
                 </dd>
-                <dd><a href="${basePath}/admin/train" <#if fullpath?contains("admin/train")>class="active"</#if>>列车管理</a></dd>
+                <dd><a href="${basePath}/admin/train" <#if fullpath?contains("admin/train") && !fullpath?contains("admin/trainDetail")>class="active"</#if>>列车管理</a></dd>
+                <dd><a href="${basePath}/admin/trainDetail" <#if fullpath?contains("admin/trainDetail")>class="active"</#if>>列车详情管理</a></dd>
             </dl>
         </li>
         <li>
@@ -77,6 +80,8 @@
                 <dt>其他</dt>
                 <dd><a href="${basePath}/admin/notify"
                        <#if fullpath?contains("admin/notify")>class="active"</#if>>公告信息</a></dd>
+                <dd><a href="${basePath}/admin/advice"
+                       <#if fullpath?contains("admin/advice")>class="active"</#if>>投诉建议</a></dd>
             </dl>
         </li>
     </ul>

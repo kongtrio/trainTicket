@@ -127,8 +127,9 @@
 <script src="${basePath}/js/jquery.myPagination.js"></script>
 <script type="text/javascript">
     var query_username = $("#query_username").val();
+<#if sites??>
     initPagesWithClick("pageColumn",${sites.number},${sites.totalPages}, pageClickEvent);
-
+</#if>
     $("#query_username").change(function () {
         $("#pageNo").val(1);
         $("#query_form").submit();

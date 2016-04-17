@@ -128,7 +128,9 @@
 <script src="${basePath}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
     var query_username = $("#query_username").val();
+<#if notifys??>
     initPagesWithClick("pageColumn",${notifys.number},${notifys.totalPages}, pageClickEvent);
+</#if>
     $("#add_expire_time").datepicker({"dateFormat": "yy-mm-dd"});
     $("#alter_expire_time").datepicker({"dateFormat": "yy-mm-dd"});
     $("#query_username").change(function () {

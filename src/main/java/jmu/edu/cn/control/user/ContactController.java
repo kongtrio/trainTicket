@@ -24,7 +24,7 @@ public class ContactController extends BaseController {
     @RequestMapping(value = "/contact/list")
     public String index(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-                        @ModelAttribute("notifyMsg") String notifyMsg, Model model) {
+                        @ModelAttribute("msg") String msg, Model model) {
         Users user = (Users) request.getSession().getAttribute("user");
         Page<Contact> contactsByUser = usersService.findContactsByUser(pageNo, pageSize, user);
         model.addAttribute("contacts", contactsByUser);
@@ -44,7 +44,7 @@ public class ContactController extends BaseController {
             usersService.saveContact(contact, user);
             msg = "添加联系人成功";
         }
-        model.addFlashAttribute("notifyMsg", msg);
+        model.addFlashAttribute("msg", msg);
         return "redirect:/user/contact/list";
     }
 
@@ -66,14 +66,14 @@ public class ContactController extends BaseController {
             usersService.updateContact(contactById);
             msg = "修改联系人成功";
         }
-        model.addFlashAttribute("notifyMsg", msg);
+        model.addFlashAttribute("msg", msg);
         return "redirect:/user/contact/list";
     }
 
     @RequestMapping(value = "/contact/del/{contactId}")
     public String delUsers(@PathVariable("contactId") Long contactId, RedirectAttributes model) {
         usersService.deleteContact(contactId);
-        model.addFlashAttribute("notifyMsg", "删除联系人成功");
+        model.addFlashAttribute("msg", "删除联系人成功");
         return "redirect:/user/contact/list";
     }
 }

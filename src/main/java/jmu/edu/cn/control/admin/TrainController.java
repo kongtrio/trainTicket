@@ -15,12 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/3/20.
@@ -34,9 +30,14 @@ public class TrainController {
     @Autowired
     private SitesService sitesService;
 
+    @RequestMapping(value = "")
+    public String index() {
+        return "redirect:/admin/users";
+    }
+
     @RequestMapping(value = "/train")
     public String train(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
-                        @RequestParam(required = false, defaultValue = "10") Integer pageSize, @ModelAttribute("notifyMsg") String notifyMsg, QueryParam queryParam, Model model) {
+                        @RequestParam(required = false, defaultValue = "4") Integer pageSize, @ModelAttribute("notifyMsg") String notifyMsg, QueryParam queryParam, Model model) {
         Page<Train> trains = trainService.findAll(pageNo, pageSize, queryParam);
         model.addAttribute("trains", trains);
         model.addAttribute("param", queryParam);

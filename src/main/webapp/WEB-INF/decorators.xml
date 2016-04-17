@@ -15,6 +15,7 @@
     <decorator name="tourist" page="decorator_tourist.ftl">
         <pattern>/tourist**</pattern>
         <pattern>/notify**</pattern>
+        <pattern>/advice**</pattern>
     </decorator>
 
     <decorator name="admin" page="decorator_admin.ftl">

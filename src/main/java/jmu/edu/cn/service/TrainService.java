@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +39,24 @@ public class TrainService {
     private SitesDao sitesDao;
     @Autowired
     private SitesService sitesService;
+
+    public List<Train> getTrainBySite(final String site) {
+        if (StringUtils.isBlank(site)) {
+            return null;
+        }
+        List<Sites> sites = sitesService.findBySiteLike(site);
+        List<TrainSite> trainSiteList = findBySiteList(sites);
+        if (trainSiteList == null) {
+            return null;
+        }
+        //某辆列车必须同时包含这两个站点,才将它加入list中
+        List<Train> trains = Lists.newArrayList();
+        for (TrainSite trainSite : trainSiteList) {
+            Train train = trainSite.getTrain();
+            trains.add(train);
+        }
+        return trains;
+    }
 
     //先根据beginSite和endsite获取对应站点,获取到的站点去train_site表中找到对应的列车(列车站点对应表)
     //找出所有有经过这两个站点的列车后,在排除掉那些方向不对的列车,剩下的就是可以搭乘的所有列车
@@ -84,6 +103,12 @@ public class TrainService {
             if (DateUtil.getDayTimes(trainReport.getBeginTime()) >= DateUtil.getDayTimes(trainReport.getEndTime())) {
                 continue;
             }
+            //过滤掉今天已经开出的列车
+            String todayTime = DateUtil.formatDate(new Date(), "HH:mm:ss");
+            if (DateUtil.isToday(time) && DateUtil.getDayTimes(todayTime) > DateUtil.getDayTimes(trainReport.getBeginTime())) {
+                continue;
+            }
+
             trainReport.setTrainDetail(trainDetail);
             trainReports.add(trainReport);
         }
@@ -129,6 +154,34 @@ public class TrainService {
         return trainDao.findAll(spec, page);
     }
 
+    public Page<TrainDetail> findAllDetail(int pageNo, int pageSize, QueryParam queryParam, List<Train> trains) {
+        List<SearchFilter> filters = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(trains)) {
+            filters.add(new SearchFilter("train", SearchFilter.Operator.IN, trains));
+        }
+        if (StringUtils.isNotBlank(queryParam.getSerial())) {
+            filters.add(new SearchFilter("train.trainSerial", SearchFilter.Operator.LIKE, queryParam.getSerial()));
+        }
+        if (queryParam.getId() != 0) {
+            filters.add(new SearchFilter("id", SearchFilter.Operator.EQ, queryParam.getId()));
+        }
+        if (StringUtils.isNotBlank(queryParam.getBeginTime()) && StringUtils.isNotBlank(queryParam.getEndTime())) {
+            Date beginTime = DateUtil.parseDate(queryParam.getBeginTime(), "yyyy-MM-dd");
+            Date endTime = DateUtil.parseDate(queryParam.getEndTime(), "yyyy-MM-dd");
+            filters.add(new SearchFilter("time", SearchFilter.Operator.LT, endTime));
+            filters.add(new SearchFilter("time", SearchFilter.Operator.GTE, beginTime));
+        }
+        if (StringUtils.isNotBlank(queryParam.getStatus()) && !queryParam.getStatus().equalsIgnoreCase("all")) {
+            int status = queryParam.getStatus().equals("normal") ? 1 : 0;
+            filters.add(new SearchFilter("status", SearchFilter.Operator.EQ, status));
+        }
+
+        Sort.Order order = new Sort.Order(Sort.Direction.ASC, "time");
+        Specification<TrainDetail> spec = DynamicSpecifications.bySearchFilter(filters, TrainDetail.class);
+        PageRequest page = new PageRequest(pageNo - 1, pageSize, new Sort(order));
+        return trainDetailDao.findAll(spec, page);
+    }
+
     public List<TrainSite> findBySiteList(List<Sites> sites) {
         if (CollectionUtils.isEmpty(sites)) {
             return null;
@@ -163,13 +216,21 @@ public class TrainService {
             Date date = DateUtil.nextDayBeginTime(i);
             TrainDetail trainDetail = new TrainDetail();
             trainDetail.setTrain(train);
-            trainDetail.setSeatNumber(100);
+            trainDetail.setSeatNumber(105);
             trainDetail.setTime(date);
             trainDetail.setStatus(1);
             trainDetailList.add(trainDetail);
         }
         trainDetailDao.save(trainDetailList);
 
+    }
+
+    public void saveTrainDetail(TrainDetail trainDetail) {
+        trainDetailDao.save(trainDetail);
+    }
+
+    public Train saveTrain(Train train) {
+        return trainDao.save(train);
     }
 
     public Train saveTrain(String trainSerial, List<TrainScribe> trainScribeList) {
@@ -188,6 +249,10 @@ public class TrainService {
 
     public Train findById(long id) {
         return trainDao.findById(id);
+    }
+
+    public TrainDetail findDetailById(long id) {
+        return trainDetailDao.findById(id);
     }
 
     public List<Sites> getBySiteNames(List<String> siteNames) {

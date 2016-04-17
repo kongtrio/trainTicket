@@ -1,12 +1,13 @@
 <form action="${basePath}/tourist/order/create" method="post" id="order_form">
-    <input type="hidden" name="beginSite" value="${beginSite!""}"/>
-    <input type="hidden" name="endSite" value="${endSite!""}"/>
-    <input type="hidden" name="datefrom" id="beginTime" value="${beginTime!""}/>
-    <input type="hidden" name="dateto" id="endTime" value="${endTime!""}/>
-    <input type="hidden" name="useTime" value="${useTime!""}"/>
+    <input type="hidden" name="beginSite" value="${beginSite!''}"/>
+    <input type="hidden" name="endSite" value="${endSite!''}"/>
+    <input type="hidden" name="datefrom" id="beginTime" value="${beginTime!''}"/>
+    <input type="hidden" name="dateto" id="endTime" value="${endTime!''}"/>
+    <input type="hidden" name="useTime" value="${useTime!''}"/>
     <input type="hidden" name="price" id="price"/>
-    <input type="hidden" name="trainDetailId" value="${train.id!""}"/>
+    <input type="hidden" name="trainDetailId" value="${train.id!''}"/>
     <input type="hidden" name="contactIds" id="contacts_id"/>
+    <input type="hidden" id="orderId" name="orderId" value="<#if orderId?? && orderId!=0>${orderId}<#else>0</#if>"/>
 </form>
 <div class="span12">
     <h1 align="center">
@@ -39,7 +40,7 @@
     </ul>
     <a style="font-size: 20px;margin-left: 10px;" href="${basePath}/user/contact/list">联系人管理</a>
     <hr/>
-    <button class="btn" type="button" onclick="toOrder()">订票</button>
+    <button class="btn" type="button" onclick="toOrder()"><#if orderId?? && orderId!=0>改签<#else>订票</#if></button>
     <span style="float: right;margin-right: 40px;font-size: 20px;color: crimson;">总价:<em id="total_price">0</em>元</span>
 </div>
 <script type="text/javascript">
@@ -63,7 +64,7 @@
             $(".contact_check").each(function () {
                 if (this.checked == true) {
                     check_num++;
-                    check_id += this.value;
+                    check_id += this.value + ",";
                 }
             });
             $("#contacts_id").val(check_id);

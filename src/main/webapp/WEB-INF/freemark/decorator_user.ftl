@@ -5,10 +5,12 @@
     <title>火车票订票系统</title>
     <link rel="stylesheet" href="${basePath}/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
     <link rel="stylesheet" href="${basePath}/css/tourist.css">
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/jquery-ui.css">
     <script src="${basePath}/js/jquery.js"></script>
     <script src="${basePath}/js/market/common.js"></script>
     <script type="text/javascript" src="${basePath}/js/Validform_v5.3.2_min.js"></script>
     <script src="${basePath}/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <script src="${basePath}/js/jquery-ui/jquery-ui.js"></script>
     <script>
         (function ($) {
             $(window).load(function () {
@@ -58,15 +60,15 @@
                             订单管理
                         </li>
                         <li <#if fullpath?contains("order/unFinished")>class="active"</#if>>
-                            <a href="${basePath}/user/order/unFinished">未完成订单</a>
+                            <a href="${basePath}/user/order/unFinished">未过期订单</a>
                         </li>
                         <li <#if fullpath?contains("order/finished")>class="active"</#if>>
-                            <a href="${basePath}/user/order/finished">已完成订单</a>
+                            <a href="${basePath}/user/order/finished">已过期订单</a>
                         </li>
                         <li class="divider">
                         </li>
                         <li>
-                            <a href="#">投诉建议</a>
+                            <a href="${basePath}/advice">投诉建议</a>
                         </li>
                     </ul>
                 </div>
@@ -78,12 +80,30 @@
         </div>
     </div>
 </div>
+
+<#--提示-->
+<div id="dialog-message" style="display: none" title="提示">
+    <p>
+        <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+        <span id="msg_content"></span>
+    </p>
+</div>
 </body>
 <script type="text/javascript">
-    var notifyMsg = '${notifyMsg!""}';
+    var notifyMsg = '${msg!""}';
+    console.log("notify==" + notifyMsg);
     if (notifyMsg.trim() != "") {
         console.log(notifyMsg);
-        alert(notifyMsg);
+        $("#msg_content").html(notifyMsg);
+        $( "#dialog-message" ).dialog({
+            height: "auto",
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
     }
 </script>
 </html>

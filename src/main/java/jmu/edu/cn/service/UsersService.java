@@ -66,9 +66,16 @@ public class UsersService {
         return contactDao.findAll(spec, page);
     }
 
+
     public Contact findContactById(long contactId) {
         Contact contact = contactDao.findById(contactId);
         return contact;
+    }
+
+    public List<Contact> findContactByIds(List<Long> contactIds) {
+        List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("id", SearchFilter.Operator.IN, contactIds));
+        Specification<Contact> spec = DynamicSpecifications.bySearchFilter(filters, Contact.class);
+        return contactDao.findAll(spec);
     }
 
     public void save(Users user) {

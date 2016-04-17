@@ -42,7 +42,7 @@ public class SitesController extends BaseController {
     @RequestMapping(value = "/addSites", method = RequestMethod.POST)
     public String addSites(Sites sites, RedirectAttributes model) {
         sitesService.saveOrUpdate(sites);
-        model.addFlashAttribute("notifyMsg", "添加站点成功！");
+        model.addFlashAttribute("notifyMsg", "添加站点成功!");
         return "redirect:/admin/sites";
     }
 

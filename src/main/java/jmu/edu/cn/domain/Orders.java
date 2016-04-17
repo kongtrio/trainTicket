@@ -1,9 +1,11 @@
 package jmu.edu.cn.domain;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +23,11 @@ public class Orders extends IdEntity {
     private String endSite;
     private String useTime;
     private float price;
-    private String seatSerial;
     private int status;
     private Users users;
     private List<OrdersDetail> ordersDetails;
     private TrainDetail trainDetail;
+    private String contactFormat;
 
     @Column(name = "begin_time")
     public Date getBeginTime() {
@@ -34,15 +36,6 @@ public class Orders extends IdEntity {
 
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
-    }
-
-    @Column(name = "seat_serial")
-    public String getSeatSerial() {
-        return seatSerial;
-    }
-
-    public void setSeatSerial(String seatSerial) {
-        this.seatSerial = seatSerial;
     }
 
     public Date getTime() {
@@ -133,5 +126,34 @@ public class Orders extends IdEntity {
 
     public void setTrainDetail(TrainDetail trainDetail) {
         this.trainDetail = trainDetail;
+    }
+
+    @Transient
+    public String getContactFormat() {
+        if (ordersDetails != null && ordersDetails.size() > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (OrdersDetail ordersDetail : ordersDetails) {
+                Contact contact = ordersDetail.getContact();
+                builder.append("联系人:&nbsp;" + contact.getName() + "&nbsp;&nbsp;&nbsp;&nbsp;身份证:&nbsp;"
+                        + contact.getIdentityCard() + "&nbsp;&nbsp;&nbsp;&nbsp;座位号:&nbsp;" + ordersDetail.getSeatSerial() + "<br/>");
+            }
+            return builder.toString();
+        }
+        return contactFormat;
+    }
+
+    public void setContactFormat(String contactFormat) {
+        this.contactFormat = contactFormat;
+    }
+
+    public void copy(Orders orders) {
+        this.beginSite = orders.getBeginSite();
+        this.endSite = orders.getEndSite();
+        this.beginTime = orders.getBeginTime();
+        this.endTime = orders.getEndTime();
+        this.useTime = orders.getUseTime();
+        this.price = orders.getPrice();
+        this.trainDetail = orders.getTrainDetail();
+        this.time = new Date();
     }
 }

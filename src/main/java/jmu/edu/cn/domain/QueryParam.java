@@ -20,6 +20,25 @@ public class QueryParam {
     private long trainDetailId;
     private String time;
     private String contactIds;
+    private String timeType;
+    private String status;
+    private String serial;
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
 
     public String getSearchKey() {
         return searchKey;
@@ -147,5 +166,13 @@ public class QueryParam {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

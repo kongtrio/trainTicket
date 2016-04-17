@@ -137,7 +137,9 @@
 <!--结束：弹出框效果-->
 <script src="${basePath}/js/jquery.myPagination.js"></script>
 <script type="text/javascript">
+<#if users??>
     initPages("pageColumn",${users.number},${users.totalPages}, pageClickEvent);
+</#if>
 
     function showAddDiv() {
         $("#addDiv").fadeIn();
