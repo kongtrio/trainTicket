@@ -71,16 +71,15 @@
 
 
 <div class="header">
-    <h1 class="headerLogo"><a title="后台管理系统" target="_blank" href="http://sc.chinaz.com/"><img alt="logo"
-                                                                                               src="${basePath}/image/logo.gif"></a>
+    <h1 class="headerLogo"><a target="_blank" href="http://cec.jmu.edu.cn/"><img alt="logo" style="height: 70px;"
+                                                                                               src="${basePath}/image/login_back.gif"></a>
     </h1>
 
     <div class="headerNav">
-        <a target="_blank" href="http://sc.chinaz.com/">华软官网</a>
-        <a target="_blank" href="http://sc.chinaz.com/">关于华软</a>
-        <a target="_blank" href="http://sc.chinaz.com/">开发团队</a>
-        <a target="_blank" href="http://sc.chinaz.com/">意见反馈</a>
-        <a target="_blank" href="http://sc.chinaz.com/">帮助</a>
+        <a target="_blank" href="http://cec.jmu.edu.cn/">集美计算机工程学院</a>
+        <a target="_blank" href="http://www.jmu.edu.cn/">集大官网</a>
+        <a href="${basePath}/tourist">网站首页</a>
+        <a href="${basePath}/advice">意见反馈</a>
     </div>
 </div>
 
@@ -138,11 +137,8 @@
 
     <div class="bd">
         <ul>
-            <li style="background:url(${basePath}/image/background.png) #CCE1F3 center 0 no-repeat;"><a target="_blank"
-                                                                                                        href="http://sc.chinaz.com/"></a>
-            </li>
-            <li style="background:url(${basePath}/image/background.png) #BCE0FF center 0 no-repeat;"><a target="_blank"
-                                                                                                        href="http://sc.chinaz.com/"></a>
+            <li style="background:url(${basePath}/image/background.png) #BCE0FF center 0 no-repeat;"><a
+                                                                                                        href="${basePath}/tourist"></a>
             </li>
         </ul>
     </div>
@@ -212,11 +208,10 @@
 <div class="banner-shadow"></div>
 
 <div class="footer">
-    <p>Copyright &copy; 2014.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">
-        &#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+    <p>Copyright &copy; 2014.Company name All rights reserved.</p>
 </div>
-<div style="display:none">
-    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
-</div>
+<#--<div style="display:none">-->
+    <#--<script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>-->
+<#--</div>-->
 </body>
 </html>

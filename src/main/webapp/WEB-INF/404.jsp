@@ -4,9 +4,9 @@
 <head>
     <%
         String path = request.getContextPath();
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path ;
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     %>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>404错误</title>
     <link rel="stylesheet" href="<%=basePath%>/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
     <link rel="stylesheet" href="<%=basePath%>/css/tourist.css">
@@ -105,19 +105,24 @@
                         <div class="nav-collapse collapse navbar-responsive-collapse">
                             <ul class="nav">
                                 <li>
-                                <a href="<%=basePath%>/tourist">购票</a>
+                                    <a href="<%=basePath%>/tourist">购票</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/user">用户中心</a>
+                                    <a href="<%=basePath%>/user">用户中心</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/notify">通知公告</a>
+                                    <a href="<%=basePath%>/notify">通知公告</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/notify">投诉建议</a>
+                                    <a href="<%=basePath%>/advice">投诉建议</a>
                                 </li>
                             </ul>
                             <ul class="nav pull-right">
+
+                                <li>
+                                    <a href="<%=basePath%>/genal/login">登录</a>
+                                </li>
+
                                 <li class="divider-vertical">
                                 </li>
                                 <li class="dropdown">
@@ -125,10 +130,10 @@
                                             class="caret"></strong></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#">改签</a>
+                                            <a href="<%=basePath%>/user/order/unFinished">改签</a>
                                         </li>
                                         <li>
-                                            <a href="#">退票</a>
+                                            <a href="<%=basePath%>/user/order/unFinished">退票</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -141,19 +146,17 @@
 
             <div class="hero-unit">
                 <h1>
-                    404!
+                    404 NOT FOUND!
                 </h1>
-                <p>
-                    报错,找不到找个网页.
-                </p>
             </div>
 
             <div class="row-fluid">
                 <div class="span12" style="margin-top: 30px;text-align: center;background-color: dimgrey;">
                     <address>
-                        <strong>集美大学计算机工程学院.</strong><br />
-                        福建,厦门<br />
-                        <abbr title="Phone">author:</abbr> xxxx</address>
+                        <strong>集美大学计算机工程学院.</strong><br/>
+                        福建,厦门<br/>
+                        <abbr title="Phone">author:</abbr> xxxx
+                    </address>
                 </div>
             </div>
         </div>

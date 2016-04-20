@@ -19,6 +19,7 @@
     </bean>
 
     <task:annotation-driven/>
+    <task:scheduler id="scheduler" pool-size="1"/>
     <aop:aspectj-autoproxy/>
 
     <context:component-scan base-package="jmu.edu.cn">

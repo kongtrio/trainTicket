@@ -4,10 +4,10 @@
 <head>
     <%
         String path = request.getContextPath();
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path ;
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     %>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>404错误</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>403错误</title>
     <link rel="stylesheet" href="<%=basePath%>/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
     <link rel="stylesheet" href="<%=basePath%>/css/tourist.css">
     <script src="<%=basePath%>/js/jquery.js"></script>
@@ -105,19 +105,24 @@
                         <div class="nav-collapse collapse navbar-responsive-collapse">
                             <ul class="nav">
                                 <li>
-                                <a href="<%=basePath%>/tourist">购票</a>
+                                    <a href="<%=basePath%>/tourist">购票</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/user">用户中心</a>
+                                    <a href="<%=basePath%>/user">用户中心</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/notify">通知公告</a>
+                                    <a href="<%=basePath%>/notify">通知公告</a>
                                 </li>
                                 <li>
-                                <a href="<%=basePath%>/notify">投诉建议</a>
+                                    <a href="<%=basePath%>/advice">投诉建议</a>
                                 </li>
                             </ul>
                             <ul class="nav pull-right">
+
+                                <li>
+                                    <a href="<%=basePath%>/genal/login">登录</a>
+                                </li>
+
                                 <li class="divider-vertical">
                                 </li>
                                 <li class="dropdown">
@@ -125,10 +130,10 @@
                                             class="caret"></strong></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#">改签</a>
+                                            <a href="<%=basePath%>/user/order/unFinished">改签</a>
                                         </li>
                                         <li>
-                                            <a href="#">退票</a>
+                                            <a href="<%=basePath%>/user/order/unFinished">退票</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -141,22 +146,17 @@
 
             <div class="hero-unit">
                 <h1>
-                    Hello, world!
+                    403 ERROR!
                 </h1>
-                <p>
-                    这是一个可视化布局模板, 你可以点击模板里的文字进行修改, 也可以通过点击弹出的编辑框进行富文本修改. 拖动区块能实现排序.
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-large" href="#">参看更多 »</a>
-                </p>
             </div>
 
             <div class="row-fluid">
                 <div class="span12" style="margin-top: 30px;text-align: center;background-color: dimgrey;">
                     <address>
-                        <strong>集美大学计算机工程学院.</strong><br />
-                        福建,厦门<br />
-                        <abbr title="Phone">author:</abbr> xxxx</address>
+                        <strong>集美大学计算机工程学院.</strong><br/>
+                        福建,厦门<br/>
+                        <abbr title="Phone">author:</abbr> xxxx
+                    </address>
                 </div>
             </div>
         </div>

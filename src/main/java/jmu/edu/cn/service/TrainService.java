@@ -40,6 +40,10 @@ public class TrainService {
     @Autowired
     private SitesService sitesService;
 
+    public List<Train> list() {
+        return (List) trainDao.findAll();
+    }
+
     public List<Train> getTrainBySite(final String site) {
         if (StringUtils.isBlank(site)) {
             return null;
