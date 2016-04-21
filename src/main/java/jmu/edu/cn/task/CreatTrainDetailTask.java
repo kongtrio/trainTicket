@@ -32,7 +32,7 @@ public class CreatTrainDetailTask {
         for (Train train : list) {
             TrainDetail trainDetail = new TrainDetail();
             trainDetail.setSeatNumber(105);
-            trainDetail.setTime(new Date(DateUtil.todayBeginTime()));
+            trainDetail.setTime(new Date(DateUtil.nextDays(60)));
             trainDetail.setTrain(train);
             trainDetail.setStatus(1);
             trainService.saveTrainDetail(trainDetail);

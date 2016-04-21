@@ -137,8 +137,8 @@
 
     <div class="bd">
         <ul>
-            <li style="background:url(${basePath}/image/background.png) #BCE0FF center 0 no-repeat;"><a
-                                                                                                        href="${basePath}/tourist"></a>
+            <li style="background:url(${basePath}/image/background.png) #BCE0FF center 0 no-repeat;">
+                <a href="${basePath}/tourist"></a>
             </li>
         </ul>
     </div>

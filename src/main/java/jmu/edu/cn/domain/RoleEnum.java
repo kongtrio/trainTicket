@@ -4,7 +4,7 @@ package jmu.edu.cn.domain;
  * Created by Administrator on 2016/3/20.
  */
 public enum RoleEnum {
-    ROLE_ADMIN("¹ÜÀíÔ±"), ROLE_USER("ÆÕÍ¨ÓÃ»§");
+    ROLE_ADMIN("ç®¡ç†å‘˜"), ROLE_USER("æ™®é€šç”¨æˆ·");
     private String descripbe;
     private RoleEnum(String descripbe) {
         this.descripbe = descripbe;

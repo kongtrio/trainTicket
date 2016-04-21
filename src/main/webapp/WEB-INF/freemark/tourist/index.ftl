@@ -22,17 +22,18 @@
             <input type="hidden" id="o_end_time" name="endTime"/>
             <input type="hidden" id="o_use_time" name="useTime"/>
             <input type="hidden" id="traindetail_id" name="id"/>
-            <input type="hidden" id="orderId" name="orderId" value="<#if orderId?? && orderId!=0>${orderId}<#else>0</#if>"/>
+            <input type="hidden" id="orderId" name="orderId"
+                   value="<#if orderId?? && orderId!=0>${orderId}<#else>0</#if>"/>
         </form>
         <form class="form-search" method="post" action="${basePath}/tourist">
-            <input class="input-medium search-query" id="begin_site" name="beginSite" type="text"
+            <input class="input-medium search-query" id="begin_site" name="beginSite" type="text" data-toggle="modal"
                    value="<#if param??>${param.beginSite!""}</#if>" placeholder="起始站"/>
             <input class="input-medium search-query" id="end_site" name="endSite" type="text"
                    value="<#if param??>${param.endSite!""}</#if>" placeholder="终点站"/>
             <input class="input-medium search-query" type="text" id="time" name="time" placeholder="时间"
                    value="<#if param??>${param.time!""}<#else>${date!''}</#if>" readonly="readonly"/>
             <input type="hidden" id="orderId" name="orderId" value="<#if orderId??>${orderId}<#else>0</#if>"/>
-            <button type="submit" class="btn">查找对应车辆</button>
+            <button type="submit" class="btn" id="search_train">查找对应车辆</button>
         <#if orderId?? && orderId!=0> <span style="float: right;color:red;font-size: 20px">改签车票</span></#if>
 
         </form>
@@ -134,6 +135,20 @@
         }
     });
     $("#time").datepicker({"dateFormat": "yy-mm-dd", minDate: 0, maxDate: "+2M"});
+
+    $("#search_train").click(function () {
+        var beginSite = $("#begin_site").val();
+        var endSite = $("#end_site").val();
+        if (!contains(db_site_array, beginSite)) {
+            openAlert("该起始站点不存在");
+            return false;
+        }
+        if (!contains(db_site_array, endSite)) {
+            openAlert("该终点站不存在");
+            return false;
+        }
+    });
+
     function orderTicket(beginSite, endSite, beginTime, endTime, useTime, id) {
         beginTime = $("#time").val() + " " + beginTime;
         endTime = $("#time").val() + " " + endTime;
@@ -144,5 +159,18 @@
         $("#o_use_time").val(useTime);
         $("#traindetail_id").val(id);
         $("#order_form").submit();
+    }
+
+    function openAlert(msg) {
+        $("#msg_content").html(msg);
+        $("#dialog-message").dialog({
+            height: "auto",
+            modal: true,
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
     }
 </script>

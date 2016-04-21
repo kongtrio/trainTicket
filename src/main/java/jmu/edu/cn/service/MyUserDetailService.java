@@ -29,6 +29,7 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users dbUser = usersService.findByUsername(username);
         if (dbUser == null) {
+            logger.info("{} user not found in db", username);
             throw new UsernameNotFoundException("");
         }
         Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();

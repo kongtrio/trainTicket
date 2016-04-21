@@ -47,6 +47,7 @@ public class LoginSuccessHandle extends SimpleUrlAuthenticationSuccessHandler im
         }
 
         SavedRequest savedRequest = this.requestCache.getRequest(request, response);
+        logger.info(userDetails.getUsername() + "is login system");
         if (savedRequest == null) {
             super.onAuthenticationSuccess(request, response, authentication);
         } else {
