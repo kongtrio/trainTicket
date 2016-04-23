@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/chosen.css">
 <div class="row">
     <div class="span3" style="background-color: currentColor;border-radius: 5%;">
         <h3 style="color: cornsilk;">
@@ -26,19 +27,26 @@
                    value="<#if orderId?? && orderId!=0>${orderId}<#else>0</#if>"/>
         </form>
         <form class="form-search" method="post" action="${basePath}/tourist">
-            <input class="input-medium search-query" id="begin_site" name="beginSite" type="text" data-toggle="modal"
-                   value="<#if param??>${param.beginSite!""}</#if>" placeholder="起始站"/>
-            <input class="input-medium search-query" id="end_site" name="endSite" type="text"
-                   value="<#if param??>${param.endSite!""}</#if>" placeholder="终点站"/>
+            <select class="chosen_site" data-placeholder="请选择起始站" name="beginSite" id="begin_site">
+                <option value=""></option>
+            </select>
+            <select class="chosen_site" data-placeholder="请选择终点站" name="endSite" id="end_site">
+                <option value=""></option>
+            </select>
+        <#--<input class="input-medium search-query" id="begin_site" name="beginSite" type="text" data-toggle="modal"-->
+        <#--value="<#if param??>${param.beginSite!""}</#if>" placeholder="起始站"/>-->
+        <#--<input class="input-medium search-query" id="end_site" name="endSite" type="text"-->
+        <#--value="<#if param??>${param.endSite!""}</#if>" placeholder="终点站"/>-->
             <input class="input-medium search-query" type="text" id="time" name="time" placeholder="时间"
+                   style="margin-bottom: 20px"
                    value="<#if param??>${param.time!""}<#else>${date!''}</#if>" readonly="readonly"/>
             <input type="hidden" id="orderId" name="orderId" value="<#if orderId??>${orderId}<#else>0</#if>"/>
-            <button type="submit" class="btn" id="search_train">查找对应车辆</button>
+            <button type="submit" class="btn" id="search_train" style="margin-bottom: 20px">查找对应车辆</button>
         <#if orderId?? && orderId!=0> <span style="float: right;color:red;font-size: 20px">改签车票</span></#if>
 
         </form>
     <#if trains?? && trains?size gt 0>
-        <table class="table">
+        <table class="table" style="margin-bottom: 20px">
             <thead>
             <tr>
                 <th>
@@ -118,20 +126,32 @@
     </div>
 </div>
 <script src="${basePath}/js/jquery-ui/jquery-ui.js"></script>
+<script src="${basePath}/js/jquery-ui/chosen.jquery.js"></script>
 <script type="text/javascript">
     var db_site_array = [];
+    var searchBeginSite = '<#if param??>${param.beginSite!""}</#if>';
+    var searchEndSite = '<#if param??>${param.endSite!""}</#if>';
     $.ajax({
         url: "${basePath}/admin/train/getSites",
         success: function (data) {
             db_site_array = eval("(" + data + ")");
-            $("#begin_site").autocomplete({
-                source: db_site_array,
-                autoFocusType: true
-            });
-            $("#end_site").autocomplete({
-                source: db_site_array,
-                autoFocusType: true
-            });
+            var $beginSite = $("#begin_site");
+            var $endSite = $("#end_site");
+            console.log(db_site_array);
+            console.log($beginSite);
+            for (var i = 0; i < db_site_array.length; i++) {
+                var $htmlBegin = $("<option value='" + db_site_array[i] + "'>" + db_site_array[i] + "</option>");
+                var $htmlEnd = $("<option value='" + db_site_array[i] + "'>" + db_site_array[i] + "</option>");
+                if (searchBeginSite != undefined && db_site_array[i] == searchBeginSite) {
+                    $htmlBegin.attr("selected", "selected");
+                }
+                if (searchEndSite != undefined && db_site_array[i] == searchEndSite) {
+                    $htmlEnd.attr("selected", "selected");
+                }
+                $beginSite.append($htmlBegin);
+                $endSite.append($htmlEnd);
+            }
+            $(".chosen_site").chosen();
         }
     });
     $("#time").datepicker({"dateFormat": "yy-mm-dd", minDate: 0, maxDate: "+2M"});
