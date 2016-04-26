@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,6 +86,7 @@ public class UsersService {
         Role role = roleDao.findByName(RoleEnum.ROLE_USER.name());
         user.setRoles(Lists.newArrayList(role));
         user.setStatus(1);
+        user.setLastLoginTime(new Date());
         usersDao.save(user);
     }
 
