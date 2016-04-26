@@ -52,7 +52,7 @@
                         data: {username: username},
                         async: false,
                         success: function (data) {
-                            if (data == "true") {
+                            if (data == true || data == "true") {
                                 flag = true;
                             } else {
                                 $(".register-error-box").html("用户名已存在");
@@ -72,7 +72,7 @@
 
 <div class="header">
     <h1 class="headerLogo"><a target="_blank" href="http://cec.jmu.edu.cn/"><img alt="logo" style="height: 70px;"
-                                                                                               src="${basePath}/image/login_back.gif"></a>
+                                                                                 src="${basePath}/image/login_back.gif"></a>
     </h1>
 
     <div class="headerNav">
@@ -211,7 +211,7 @@
     <p>Copyright &copy; 2014.Company name All rights reserved.</p>
 </div>
 <#--<div style="display:none">-->
-    <#--<script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>-->
+<#--<script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>-->
 <#--</div>-->
 </body>
 </html>
