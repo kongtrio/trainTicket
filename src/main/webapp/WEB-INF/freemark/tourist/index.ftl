@@ -84,7 +84,7 @@
                     <td>${trainReport.beginTime!""}</td>
                     <td>${trainReport.endTime!""}</td>
                     <td>${trainReport.useTime!""}</td>
-                    <td>${trainReport.trainDetail.seatNumber!""}</td>
+                    <td>${trainReport.seatNum!""}</td>
                     <td><a href="#"
                            onclick="orderTicket('${trainReport.beginSite!""}','${trainReport.endSite!""}',
                                    '${trainReport.beginTime!""}','${trainReport.endTime!""}','${trainReport.useTime!""}',

@@ -1,5 +1,6 @@
 package jmu.edu.cn.service;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import jmu.edu.cn.dao.SitesDao;
 import jmu.edu.cn.dao.TrainDao;
@@ -95,12 +96,16 @@ public class TrainService {
         List<TrainReport> trainReports = Lists.newArrayList();
         for (TrainDetail trainDetail : trainDetailByTrains) {
             TrainReport trainReport = new TrainReport(beginSite, endSite);
+            int beginIndex = 0;
+            int endIndex = 0;
             for (TrainScribe trainScribe : trainDetail.getTrain().getTrainScribeList()) {
                 if (trainScribe.getSiteName().equals(beginSite)) {
                     trainReport.setBeginTime(trainScribe.getTime());
+                    beginIndex = trainScribe.getSiteIndex();
                 }
                 if (trainScribe.getSiteName().equals(endSite)) {
                     trainReport.setEndTime(trainScribe.getTime());
+                    endIndex = trainScribe.getSiteIndex();
                 }
             }
             //过滤掉方向相反的列车
@@ -113,9 +118,12 @@ public class TrainService {
                 continue;
             }
 
+            int minSeatNum = getMinSeatNum(trainDetail, beginIndex, endIndex);
+            trainReport.setSeatNum(minSeatNum);
             trainReport.setTrainDetail(trainDetail);
             trainReports.add(trainReport);
         }
+
 
         //按发车顺序进行排序
         Collections.sort(trainReports, new Comparator<TrainReport>() {
@@ -124,6 +132,19 @@ public class TrainService {
             }
         });
         return trainReports;
+    }
+
+    private int getMinSeatNum(TrainDetail trainDetail, int beginIndex, int endIndex) {
+        if (endIndex - 1 > trainDetail.getSeatInt().size()) {
+            return 0;
+        }
+        List<Integer> seatInt = trainDetail.getSeatInt();
+        List<Integer> realSeat = seatInt.subList(beginIndex - 1, endIndex - 1);
+        int minNum = 0;
+        for (int value : realSeat) {
+            minNum = minNum < value ? minNum : value;
+        }
+        return minNum;
     }
 
     public List<TrainDetail> findByTrains(List<Train> trains, Date date) {
@@ -220,13 +241,21 @@ public class TrainService {
             Date date = DateUtil.nextDayBeginTime(i);
             TrainDetail trainDetail = new TrainDetail();
             trainDetail.setTrain(train);
-            trainDetail.setSeatNumber(105);
+            trainDetail.setSeatNumber(getInitSeat(train.getTrainScribeList().size()));
             trainDetail.setTime(date);
             trainDetail.setStatus(1);
             trainDetailList.add(trainDetail);
         }
         trainDetailDao.save(trainDetailList);
 
+    }
+
+    public String getInitSeat(int siteSize) {
+        List<Integer> seat = Lists.newArrayList();
+        for (int i = 0; i < siteSize; i++) {
+            seat.add(105);
+        }
+        return Joiner.on(",").join(seat);
     }
 
     public void saveTrainDetail(TrainDetail trainDetail) {

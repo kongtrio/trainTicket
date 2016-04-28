@@ -45,6 +45,7 @@ public class GenalController extends BaseController {
         return "/login";
     }
 
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(Users users, Model model) {
         usersService.save(users);

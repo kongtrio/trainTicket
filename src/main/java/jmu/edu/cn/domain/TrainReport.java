@@ -11,6 +11,7 @@ public class TrainReport {
     private String beginTime;
     private String endTime;
     private String useTime;
+    private int seatNum;
     private TrainDetail trainDetail;
 
     public TrainReport(String beginSite, String endSite) {
@@ -70,5 +71,13 @@ public class TrainReport {
 
     public void setTrainDetail(TrainDetail trainDetail) {
         this.trainDetail = trainDetail;
+    }
+
+    public int getSeatNum() {
+        return seatNum;
+    }
+
+    public void setSeatNum(int seatNum) {
+        this.seatNum = seatNum;
     }
 }

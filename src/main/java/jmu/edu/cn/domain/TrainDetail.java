@@ -1,5 +1,7 @@
 package jmu.edu.cn.domain;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -15,10 +17,11 @@ import java.util.List;
 @DynamicInsert
 public class TrainDetail extends IdEntity {
     private Date time;
-    private int seatNumber;
+    private String seatNumber;
     private int status;
     private List<Orders> orders;
     private Train train;
+    private List<Integer> seatInt;
 
     public int getStatus() {
         return status;
@@ -37,11 +40,11 @@ public class TrainDetail extends IdEntity {
     }
 
     @Column(name = "seat_number")
-    public int getSeatNumber() {
+    public String getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
     }
 
@@ -65,5 +68,20 @@ public class TrainDetail extends IdEntity {
         this.train = train;
     }
 
+    @Transient
+    public List<Integer> getSeatInt() {
+        if (StringUtils.isNotBlank(this.seatNumber)) {
+            String[] split = this.seatNumber.split(",");
+            List<Integer> seats = Lists.newArrayList();
+            for (String string : split) {
+                seats.add(Integer.parseInt(string));
+            }
+            return seats;
+        }
+        return seatInt;
+    }
 
+    public void setSeatInt(List<Integer> seatInt) {
+        this.seatInt = seatInt;
+    }
 }

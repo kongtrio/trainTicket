@@ -31,7 +31,8 @@ public class CreatTrainDetailTask {
         List<Train> list = trainService.list();
         for (Train train : list) {
             TrainDetail trainDetail = new TrainDetail();
-            trainDetail.setSeatNumber(105);
+            //TODO
+            trainDetail.setSeatNumber("5");
             trainDetail.setTime(new Date(DateUtil.nextDays(60)));
             trainDetail.setTrain(train);
             trainDetail.setStatus(1);

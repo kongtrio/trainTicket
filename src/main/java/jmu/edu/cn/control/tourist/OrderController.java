@@ -108,7 +108,8 @@ public class OrderController extends BaseController {
             return "redirect:/tourist";
         }
 
-        trainDetail.setSeatNumber(trainDetail.getSeatNumber() - contactByIds.size());
+        //TODO
+        trainDetail.setSeatNumber("3,3,3");
         trainService.saveTrainDetail(trainDetail);
 
         orders.setUsers(user);
