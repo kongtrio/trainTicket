@@ -137,8 +137,6 @@
             db_site_array = eval("(" + data + ")");
             var $beginSite = $("#begin_site");
             var $endSite = $("#end_site");
-            console.log(db_site_array);
-            console.log($beginSite);
             for (var i = 0; i < db_site_array.length; i++) {
                 var $htmlBegin = $("<option value='" + db_site_array[i] + "'>" + db_site_array[i] + "</option>");
                 var $htmlEnd = $("<option value='" + db_site_array[i] + "'>" + db_site_array[i] + "</option>");

@@ -45,6 +45,7 @@
 </div>
 <script type="text/javascript">
     function toOrder() {
+        init();
         var ids = $("#contacts_id").val();
         var price = $("#total_price").html();
         if (ids == "" || price == 0) {
@@ -55,23 +56,27 @@
     }
 
     $(document).ready(function () {
-        var once_price = '${price}';
-        var check_num = 0;
-        var check_id = "";
         $(".contact_check").click(function () {
-            check_num = 0;
-            check_id = "";
-            $(".contact_check").each(function () {
-                if (this.checked == true) {
-                    check_num++;
-                    check_id += this.value + ",";
-                }
-            });
-            $("#contacts_id").val(check_id);
-            $("#price").val(check_num * once_price);
-            $("#total_price").html(check_num * once_price);
+            init();
         });
     });
 
+    function init() {
+        var once_price = '${price}';
+        var check_num = 0;
+        var check_id = "";
+        check_num = 0;
+        check_id = "";
+        $(".contact_check").each(function () {
+            console.log(this.checked);
+            if (this.checked == true) {
+                check_num++;
+                check_id += this.value + ",";
+            }
+        });
+        $("#contacts_id").val(check_id);
+        $("#price").val(check_num * once_price);
+        $("#total_price").html(check_num * once_price);
+    }
 
 </script>

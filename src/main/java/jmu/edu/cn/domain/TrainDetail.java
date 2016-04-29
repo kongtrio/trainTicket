@@ -1,5 +1,6 @@
 package jmu.edu.cn.domain;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cascade;
@@ -14,7 +15,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "train_detail")
-@DynamicInsert
 public class TrainDetail extends IdEntity {
     private Date time;
     private String seatNumber;
@@ -83,5 +83,44 @@ public class TrainDetail extends IdEntity {
 
     public void setSeatInt(List<Integer> seatInt) {
         this.seatInt = seatInt;
+    }
+
+    //传入起始站和终点站的位置
+    public int getRealSeat(int begin, int end) {
+        begin = begin - 1;
+        end = end - 1;
+        if (begin < 0 || end > this.getSeatInt().size()) {
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        List<Integer> seatInt = this.getSeatInt();
+        for (int i = begin; i <= end; i++) {
+            min = seatInt.get(i) < min ? seatInt.get(i) : min;
+        }
+        return min;
+    }
+
+    //将某个区段的所有座位减去 sellSeatNum  然后返回所有区段的座位数
+    public String calSeat(int begin, int end, int sellSeatNum, boolean isAdd) {
+        begin = begin - 1;
+        end = end - 1;
+        if (begin < 0 || end > this.getSeatInt().size()) {
+            return "error begin or end index";
+        }
+        List<Integer> seatInt = this.getSeatInt();
+        List<Integer> newSeatInt = Lists.newArrayList();
+        for (int i = 0; i < seatInt.size(); i++) {
+            Integer integer = seatInt.get(i);
+            if (i <= end && i >= begin) {
+                if (isAdd) {
+                    integer = integer + sellSeatNum;
+                } else {
+                    integer = integer - sellSeatNum;
+                }
+
+            }
+            newSeatInt.add(integer);
+        }
+        return Joiner.on(",").join(newSeatInt);
     }
 }

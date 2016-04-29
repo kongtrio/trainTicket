@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="${basePath}/css/page.css">
 <link rel="stylesheet" type="text/css" href="${basePath}/css/jquery.timepicker.css">
 <link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="${basePath}/css/jquery-ui/chosen.css">
 <form action="${basePath}/admin/addTrain" method="post" id="selectForm">
     <input id="trainDetail" name="tarinDetail" type="hidden">
     <input id="trainSerialForm" name="trainSerial" type="hidden">
@@ -10,8 +11,15 @@
     <ul class="ulColumn2">
         <li>
             <span class="item_name" style="width:120px;">站点：</span>
-            <input type="text" id="site_name" class="textbox textbox_295" placeholder="站点信息..."/>
+            <select class="chosen_site" data-placeholder="请选择站点" name="beginSite" id="site_name" style="width:150px;">
+                <option value=""></option>
+            </select>
         </li>
+
+        <#--<li>-->
+            <#--<span class="item_name" style="width:120px;">站点：</span>-->
+            <#--<input type="text" id="site_name" class="textbox textbox_295" placeholder="站点信息..."/>-->
+        <#--</li>-->
         <li>
             <span class="item_name" style="width:120px;">到站时间：</span>
             <input type="text" id="site_time" class="textbox textbox_295"/>
@@ -53,6 +61,7 @@
 <script src="${basePath}/js/jquery.myPagination.js"></script>
 <script src="${basePath}/js/jquery-ui/jquery-ui.js"></script>
 <script src="${basePath}/js/jquery.timepicker.js"></script>
+<script src="${basePath}/js/jquery-ui/chosen.jquery.js"></script>
 <script type="text/javascript">
     var site_array = [];
     var site_name = [];
@@ -61,10 +70,12 @@
         url: "${basePath}/admin/train/getSites",
         success: function (data) {
             db_site_array = eval("(" + data + ")");
-            $("#site_name").autocomplete({
-                source: db_site_array,
-                autoFocusType: true
-            });
+            var $beginSite = $("#site_name");
+            for (var i = 0; i < db_site_array.length; i++) {
+                var $htmlBegin = $("<option value='" + db_site_array[i] + "'>" + db_site_array[i] + "</option>");
+                $beginSite.append($htmlBegin);
+            }
+            $(".chosen_site").chosen();
         }
     });
 
@@ -134,8 +145,8 @@
         }
 
         if (pre_obj != undefined) {
-            if (site_price <= pre_obj.price) {
-                alert("该站的票价不能小于上一站的票价!");
+            if (parseInt(site_price) <= pre_obj.price) {
+                alert("该站的票价不能小于上一站的票价!上一站票价" + pre_obj.price + " 你填写的票价" + site_price);
                 return false;
             }
         }

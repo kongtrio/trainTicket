@@ -24,6 +24,8 @@ public class Orders extends IdEntity {
     private String useTime;
     private float price;
     private int status;
+    private Integer beginIndex;
+    private Integer endIndex;
     private Users users;
     private List<OrdersDetail> ordersDetails;
     private TrainDetail trainDetail;
@@ -126,6 +128,24 @@ public class Orders extends IdEntity {
 
     public void setTrainDetail(TrainDetail trainDetail) {
         this.trainDetail = trainDetail;
+    }
+
+    @Column(name = "begin_index")
+    public Integer getBeginIndex() {
+        return beginIndex;
+    }
+
+    public void setBeginIndex(Integer beginIndex) {
+        this.beginIndex = beginIndex;
+    }
+
+    @Column(name = "end_index")
+    public Integer getEndIndex() {
+        return endIndex;
+    }
+
+    public void setEndIndex(Integer endIndex) {
+        this.endIndex = endIndex;
     }
 
     @Transient

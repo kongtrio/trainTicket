@@ -1,6 +1,7 @@
 package jmu.edu.cn.control.tourist;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import jmu.edu.cn.control.BaseController;
 import jmu.edu.cn.domain.*;
 import jmu.edu.cn.service.OrdersService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/4/12.
@@ -83,15 +85,35 @@ public class OrderController extends BaseController {
         orders.setEndTime(DateUtil.parseDate(dateto, "yyyy-MM-dd HH:mm:ss"));
         long trainDetailId = queryParam.getTrainDetailId();
         String contactIds = queryParam.getContactIds();
+        //去掉最后的逗号
         if (contactIds.length() > 0) {
             contactIds = contactIds.substring(0, contactIds.length() - 1);
         }
         TrainDetail trainDetail = trainService.findDetailById(trainDetailId);
-        List<Orders> byTrainDetail = ordersService.getByTrainDetail(trainDetail);
-        //获取已经销售出去的座位
-        List<String> selledSeat = Lists.newArrayList();
+        Train train = trainDetail.getTrain();
+        int beginIndex = 0;
+        int endIndex = 0;
+        for (TrainScribe trainScribe : train.getTrainScribeList()) {
+            if (trainScribe.getSiteName().equalsIgnoreCase(orders.getBeginSite())) {
+                beginIndex = trainScribe.getSiteIndex();
+            }
+            if (trainScribe.getSiteName().equalsIgnoreCase(orders.getEndSite())) {
+                endIndex = trainScribe.getSiteIndex();
+            }
+        }
+        if (beginIndex == 0 || endIndex == 0) {
+            logger.info("没找到对应的站点");
+            model.addFlashAttribute("msg", "发生未知错误 没有该起始站或者没有该终点站");
+            return "redirect:/tourist";
+        }
+
+        int realSeatNum = trainDetail.getRealSeat(beginIndex, endIndex);
+
+        List<Orders> ordersbyTrainDetail = ordersService.getByTrainDetail(trainDetail);
+        //获取已经销售出去的座位,最终获取可以坐的座位
+        Set<String> selledSeat = Sets.newHashSet();
         List<String> hasSeat = Lists.newArrayList();
-        for (Orders existOrder : byTrainDetail) {
+        for (Orders existOrder : ordersbyTrainDetail) {
             List<OrdersDetail> ordersDetails = existOrder.getOrdersDetails();
             for (OrdersDetail ordersDetail : ordersDetails) {
                 selledSeat.add(ordersDetail.getSeatSerial());
@@ -100,16 +122,14 @@ public class OrderController extends BaseController {
         hasSeat.addAll(SeatUtil.seatSets);
         hasSeat.removeAll(selledSeat);
 
-        String[] split = contactIds.split(",");
-        List<Contact> contactByIds = usersService.findContactByIds(string2long(split));
-
-        if (hasSeat.size() <= 0 || hasSeat.size() < split.length) {
+        String[] contactSplit = contactIds.split(",");
+        List<Contact> contactByIds = usersService.findContactByIds(string2long(contactSplit));
+        if (hasSeat.size() <= 0 || realSeatNum < contactSplit.length) {
             model.addFlashAttribute("msg", "对不起,余票不足");
             return "redirect:/tourist";
         }
 
-        //TODO
-        trainDetail.setSeatNumber("3,3,3");
+        trainDetail.setSeatNumber(trainDetail.calSeat(beginIndex, endIndex, contactSplit.length, false));
         trainService.saveTrainDetail(trainDetail);
 
         orders.setUsers(user);
@@ -118,11 +138,14 @@ public class OrderController extends BaseController {
         if (orderId != 0) {
             Orders oldOrder = ordersService.getById(orderId);
             TrainDetail oldOrderTrainDetail = oldOrder.getTrainDetail();
+
             //收回旧的座位
-            oldOrderTrainDetail.setSeatNumber(oldOrderTrainDetail.getSeatNumber() + oldOrder.getOrdersDetails().size());
+            oldOrderTrainDetail.setSeatNumber(oldOrderTrainDetail.calSeat(oldOrder.getBeginIndex(), oldOrder.getEndIndex(), oldOrder.getOrdersDetails().size(), true));
             trainService.saveTrainDetail(oldOrderTrainDetail);
 
             oldOrder.copy(orders);
+            oldOrder.setBeginIndex(beginIndex);
+            oldOrder.setBeginIndex(endIndex);
             Orders update = ordersService.update(oldOrder);
             List<OrdersDetail> saveOrderDetail = Lists.newArrayList();
             for (int i = 0; i < contactByIds.size(); i++) {
@@ -137,8 +160,9 @@ public class OrderController extends BaseController {
             ordersService.saveDetailList(saveOrderDetail);
             model.addFlashAttribute("msg", "改签成功");
         } else {
+            orders.setBeginIndex(beginIndex);
+            orders.setEndIndex(endIndex);
             Orders saveOrder = ordersService.save(orders);
-
             List<OrdersDetail> saveOrderDetail = Lists.newArrayList();
             for (int i = 0; i < contactByIds.size(); i++) {
                 Contact contact = contactByIds.get(i);

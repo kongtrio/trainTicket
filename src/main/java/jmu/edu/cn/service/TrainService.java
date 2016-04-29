@@ -140,7 +140,7 @@ public class TrainService {
         }
         List<Integer> seatInt = trainDetail.getSeatInt();
         List<Integer> realSeat = seatInt.subList(beginIndex - 1, endIndex - 1);
-        int minNum = 0;
+        int minNum = Integer.MAX_VALUE;
         for (int value : realSeat) {
             minNum = minNum < value ? minNum : value;
         }
