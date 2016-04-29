@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by Administrator on 2016/4/12.
+ * 处理用户的订单信息的处理器
  */
 @RequestMapping("/user")
 @Controller("user_orderController")
@@ -26,6 +27,14 @@ public class OrderController {
     @Autowired
     private TrainService trainService;
 
+    /**
+     * 获取没发车的订单并返回给客户端
+     *
+     * @param pageNo     第几页
+     * @param pageSize   页面几条数据
+     * @param queryParam 查询参数
+     * @return
+     */
     @RequestMapping(value = "/order/unFinished")
     public String unFinished(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                              @RequestParam(required = false, defaultValue = "4") Integer pageSize,
@@ -36,6 +45,14 @@ public class OrderController {
         return "/user/unFinishedOrder";
     }
 
+    /**
+     * 获取已经发车的订单并返回给客户端
+     *
+     * @param pageNo     第几页
+     * @param pageSize   页面几条数据
+     * @param queryParam 查询参数
+     * @return
+     */
     @RequestMapping(value = "/order/finished")
     public String finishedOrder(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                                 @RequestParam(required = false, defaultValue = "6") Integer pageSize,
@@ -46,6 +63,12 @@ public class OrderController {
         return "/user/finishedOrder";
     }
 
+    /**
+     * 退票操作
+     *
+     * @param orderId 根据orderId来退票
+     * @return
+     */
     @RequestMapping(value = "/order/cancel/{orderId}")
     public String cancelOrder(@PathVariable("orderId") Long orderId, RedirectAttributes model) {
         Orders orders = ordersService.getById(orderId);
@@ -54,7 +77,7 @@ public class OrderController {
             return "redirect:/user/order/unFinished";
         }
         ordersService.delete(orders);
-        model.addFlashAttribute("msg","退票成功");
+        model.addFlashAttribute("msg", "退票成功");
         return "redirect:/user/order/unFinished";
     }
 

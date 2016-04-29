@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by Administrator on 2016/3/17.
+ * 处理功投诉建议信息的处理器
  */
 
 @RequestMapping("/advice")
@@ -26,11 +27,22 @@ public class AdviceController extends BaseController {
     @Autowired
     private AdvicesService advicesService;
 
+    /**
+     * 跳转到投诉建议页面
+     *
+     * @return
+     */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
         return "/tourist/advice";
     }
 
+    /**
+     * 提交一条投诉建议
+     *
+     * @param advices 投诉建议的而信息
+     * @return
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String save(Advices advices, Model model) {
         advicesService.save(advices);

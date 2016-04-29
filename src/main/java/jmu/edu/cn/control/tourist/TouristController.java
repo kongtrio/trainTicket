@@ -34,6 +34,13 @@ public class TouristController extends BaseController {
     @Autowired
     private OrdersService ordersService;
 
+    /**
+     * 跳转到购票页面,显示查询到的列车信息
+     *
+     * @param queryParam 查询信息
+     * @param orderId    如果是改签,这里的orderId应该不为0
+     * @return
+     */
     @RequestMapping(value = "")
     public String index(QueryParam queryParam, Long orderId, String msg, Model model) {
         if (StringUtils.isNotBlank(queryParam.getBeginSite()) && StringUtils.isNotBlank(queryParam.getEndSite())

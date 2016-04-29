@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by Administrator on 2016/4/11.
+ * 处理用户联系人的处理器
  */
 @RequestMapping("/user")
 @Controller("user_controller")
@@ -21,6 +22,11 @@ public class ContactController extends BaseController {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * @param pageNo   第几页
+     * @param pageSize 页面几条数据
+     * @return
+     */
     @RequestMapping(value = "/contact/list")
     public String index(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize,
@@ -31,11 +37,19 @@ public class ContactController extends BaseController {
         return "/user/contact";
     }
 
+    /**
+     * 跳转到添加新的联系人的页面
+     */
     @RequestMapping(value = "/contact/addContact", method = RequestMethod.GET)
     public String addContact() {
         return "/user/addContact";
     }
 
+    /**
+     * 添加一个新的联系人
+     *
+     * @param contact 联系人信息
+     */
     @RequestMapping(value = "/contact/addContact", method = RequestMethod.POST)
     public String saveContact(Contact contact, RedirectAttributes model) {
         String msg = "添加联系人失败";
@@ -48,6 +62,12 @@ public class ContactController extends BaseController {
         return "redirect:/user/contact/list";
     }
 
+    /**
+     * 根据联系人id获取联系人信息并跳转到修改联系人的界面
+     *
+     * @param contactId 联系人id
+     * @return
+     */
     @RequestMapping(value = "/contact/updateContact", method = RequestMethod.GET)
     public String updateContact(Model model, long contactId) {
         Contact contactById = usersService.findContactById(contactId);
@@ -55,6 +75,13 @@ public class ContactController extends BaseController {
         return "/user/addContact";
     }
 
+    /**
+     * 修改一个联系人信息
+     *
+     * @param contactId 联系人id
+     * @param contact   联系人信息
+     * @return
+     */
     @RequestMapping(value = "/contact/updateContact", method = RequestMethod.POST)
     public String updateContact(RedirectAttributes model, long contactId, Contact contact) {
         String msg = "修改联系人失败";
@@ -70,6 +97,11 @@ public class ContactController extends BaseController {
         return "redirect:/user/contact/list";
     }
 
+    /**
+     * 删除一个联系人
+     *
+     * @param contactId 联系人id
+     */
     @RequestMapping(value = "/contact/del/{contactId}")
     public String delUsers(@PathVariable("contactId") Long contactId, RedirectAttributes model) {
         usersService.deleteContact(contactId);

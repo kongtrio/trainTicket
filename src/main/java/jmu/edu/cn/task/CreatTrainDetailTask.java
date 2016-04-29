@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * Created by yangjb on 2016/4/20.
- * hello
  * 为所有创建的列车每天都添加新的班次
  */
 @Component
@@ -31,8 +30,7 @@ public class CreatTrainDetailTask {
         List<Train> list = trainService.list();
         for (Train train : list) {
             TrainDetail trainDetail = new TrainDetail();
-            //TODO
-            trainDetail.setSeatNumber("5");
+            trainDetail.setSeatNumber(trainService.getInitSeat(train.getTrainScribeList().size()));
             trainDetail.setTime(new Date(DateUtil.nextDays(60)));
             trainDetail.setTrain(train);
             trainDetail.setStatus(1);

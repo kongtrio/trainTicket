@@ -18,6 +18,7 @@ import java.util.Date;
 
 /**
  * Created by Administrator on 2016/3/20.
+ * 处理公告信息的处理器
  */
 @RequestMapping("/admin/notify")
 @Controller("admin_notifycontroller")
@@ -25,6 +26,15 @@ public class NotifyController extends BaseController {
     @Autowired
     private NotifyService notifyService;
 
+    /**
+     * 根据参数获取公告信息并返回给客户端
+     *
+     * @param pageNo     第几页数据
+     * @param pageSize   一页展示几条数据
+     * @param notifyMsg  提示消息
+     * @param queryParam 一些查询参数
+     * @return
+     */
     @RequestMapping(value = "")
     public String admin(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize, @ModelAttribute("notifyMsg") String notifyMsg, QueryParam queryParam, Model model) {
@@ -34,13 +44,27 @@ public class NotifyController extends BaseController {
         return "/admin/notify";
     }
 
-    @RequestMapping(value = "/delNotify/{siteId}")
-    public String delNotify(@PathVariable("siteId") Long siteId, RedirectAttributes model) {
-        notifyService.delete(siteId);
-        model.addFlashAttribute("notifyMsg", "删除站点成功");
+    /**
+     * 根据id删除一条公告
+     *
+     * @param notifyId 公告的id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/delNotify/{notifyId}")
+    public String delNotify(@PathVariable("notifyId") Long notifyId, RedirectAttributes model) {
+        notifyService.delete(notifyId);
+        model.addFlashAttribute("notifyMsg", "删除公告成功");
         return "redirect:/admin/notify";
     }
 
+    /**
+     * 添加一条心的公告
+     *
+     * @param notify        公告信息
+     * @param expireTimeStr 过期时间
+     * @return
+     */
     @RequestMapping(value = "/addNotify", method = RequestMethod.POST)
     public String addNotify(Notify notify, String expireTimeStr, RedirectAttributes model) {
         Date expireTime = DateUtil.parseDate(expireTimeStr, "yyyy-MM-dd");
@@ -50,6 +74,13 @@ public class NotifyController extends BaseController {
         return "redirect:/admin/notify";
     }
 
+    /**
+     * 修改一条公告
+     *
+     * @param notify        要修改的公告内容
+     * @param expireTimeStr 过期时间
+     * @return
+     */
     @RequestMapping(value = "/alterNotify", method = RequestMethod.POST)
     public String alterNotify(Notify notify, String expireTimeStr, RedirectAttributes model) {
         if (notify == null) {

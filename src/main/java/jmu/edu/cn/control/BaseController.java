@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2016/3/17.
+ * 处理器基类,给各个处理器继承用
  */
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());

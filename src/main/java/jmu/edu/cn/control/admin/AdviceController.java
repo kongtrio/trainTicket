@@ -14,14 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by Administrator on 2016/3/17.
+ * 管理员页面---处理投诉建议的处理器
  */
-
 @RequestMapping("/admin/advice")
 @Controller("admin_advice_AdviceController")
 public class AdviceController extends BaseController {
     @Autowired
     private AdvicesService advicesService;
 
+    /**
+     * 获取投诉信息并返回给客户端
+     *
+     * @param pageNo     展示第几页数据
+     * @param pageSize   一页展示几条数据
+     * @param queryParam 一些查询参数
+     */
     @RequestMapping(value = "")
     public String index(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize,

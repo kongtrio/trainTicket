@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by Administrator on 2016/4/10.
+ * 处理用户信息的处理器
  */
 
 @RequestMapping("/user")
@@ -24,6 +25,11 @@ public class UserController extends BaseController {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * 获取用户信息并跳转到用户信息界面
+     *
+     * @return
+     */
     @RequestMapping(value = "")
     public String index(@ModelAttribute("msg") String msg, Model model) {
         Users user = (Users) request.getSession().getAttribute("user");
@@ -31,11 +37,23 @@ public class UserController extends BaseController {
         return "/user/index";
     }
 
+    /**
+     * 跳转到修改密码的界面
+     *
+     * @return
+     */
     @RequestMapping(value = "/alterPassword", method = RequestMethod.GET)
     public String alterPassword(@ModelAttribute("notifyMsg") String notifyMsg) {
         return "/user/alterPassword";
     }
 
+    /**
+     * 修改密码
+     *
+     * @param oldPassword 旧密码
+     * @param password    新密码
+     * @return
+     */
     @RequestMapping(value = "/alterPassword", method = RequestMethod.POST)
     public String updateContact(RedirectAttributes model, String oldPassword, String password) {
         Users user = (Users) request.getSession().getAttribute("user");

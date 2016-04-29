@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Administrator on 2016/4/12.
+ * Created by Administrator on 2016/4/12.、
+ * 处理订单信息的处理器
  */
 @RequestMapping("/tourist")
 @Controller("tourist_orderController")
@@ -32,6 +33,13 @@ public class OrderController extends BaseController {
     @Autowired
     private OrdersService ordersService;
 
+    /**
+     * 跳转到下订单的页面
+     *
+     * @param queryParam 订单的各种信息
+     * @param orderId    如果是改签,这里会有orderId
+     * @return
+     */
     @RequestMapping(value = "/order")
     public String index(QueryParam queryParam, Long orderId, Model model) {
         Users user = (Users) request.getSession().getAttribute("user");
@@ -72,6 +80,14 @@ public class OrderController extends BaseController {
         return "/user/order";
     }
 
+    /**
+     * 创建一个新的订单
+     *
+     * @param orders     订单信息
+     * @param queryParam 一些订单信息
+     * @param orderId    如果是改签,会有orderId
+     * @return
+     */
     @RequestMapping(value = "/order/create")
     public String createOrder(Orders orders, QueryParam queryParam, long orderId, RedirectAttributes model) {
         Users user = (Users) request.getSession().getAttribute("user");
@@ -181,6 +197,12 @@ public class OrderController extends BaseController {
         return "redirect:/user/order/unFinished";
     }
 
+    /**
+     *
+     * @param orderId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/order/change/{orderId}")
     public String changeOrder(@PathVariable("orderId") Long orderId, Model model) {
         Orders orders = ordersService.getById(orderId);

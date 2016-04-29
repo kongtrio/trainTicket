@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 /**
  * Created by Administrator on 2016/3/20.
+ * 处理站点信息的处理器
  */
 @RequestMapping("/admin/sites")
 @Controller
@@ -23,6 +24,15 @@ public class SitesController extends BaseController {
     @Autowired
     private SitesService sitesService;
 
+    /**
+     * 根据参数获取站点信息并返回给客户端
+     *
+     * @param pageNo     第几页数据
+     * @param pageSize   一页展示几条数据
+     * @param notifyMsg  提示消息
+     * @param queryParam 一些查询参数
+     * @return
+     */
     @RequestMapping(value = "")
     public String admin(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize, @ModelAttribute("notifyMsg") String notifyMsg, QueryParam queryParam, Model model) {
@@ -32,6 +42,12 @@ public class SitesController extends BaseController {
         return "/admin/sites";
     }
 
+    /**
+     * 根据siteId删除一个站点
+     *
+     * @param siteId 站点对应的id
+     * @return
+     */
     @RequestMapping(value = "/delSites/{siteId}")
     public String delSites(@PathVariable("siteId") Long siteId, RedirectAttributes model) {
         sitesService.delete(siteId);
@@ -39,6 +55,12 @@ public class SitesController extends BaseController {
         return "redirect:/admin/sites";
     }
 
+    /**
+     * 添加一个新的站点
+     *
+     * @param sites 新的站点信息
+     * @return
+     */
     @RequestMapping(value = "/addSites", method = RequestMethod.POST)
     public String addSites(Sites sites, RedirectAttributes model) {
         sitesService.saveOrUpdate(sites);
@@ -46,6 +68,12 @@ public class SitesController extends BaseController {
         return "redirect:/admin/sites";
     }
 
+    /**
+     * 修改一个站点
+     *
+     * @param sites 要修改的站点的信息
+     * @return
+     */
     @RequestMapping(value = "/alterSites", method = RequestMethod.POST)
     public String alterSites(Sites sites, RedirectAttributes model) {
         if (sites == null) {
@@ -61,6 +89,12 @@ public class SitesController extends BaseController {
         return "redirect:/admin/sites";
     }
 
+    /**
+     * 检查这个站点是否已经存在是数据库中
+     *
+     * @param site 要检查的站点的名称
+     * @return
+     */
     @RequestMapping(value = "/checkSiteExist", method = RequestMethod.POST)
     @ResponseBody
     public String checkSiteExist(String site) {

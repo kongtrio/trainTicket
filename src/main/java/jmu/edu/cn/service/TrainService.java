@@ -250,7 +250,7 @@ public class TrainService {
 
     }
 
-    public String getInitSeat(int siteSize) {
+    public static String getInitSeat(int siteSize) {
         List<Integer> seat = Lists.newArrayList();
         for (int i = 0; i < siteSize; i++) {
             seat.add(105);
