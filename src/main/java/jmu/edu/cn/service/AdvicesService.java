@@ -29,6 +29,14 @@ public class AdvicesService {
         advicesDao.save(advices);
     }
 
+    /**
+     * 根据一些参数过滤,并查找某页的数据
+     *
+     * @param pageNo     第几页
+     * @param pageSize   一页几条
+     * @param queryParam 参数
+     * @return
+     */
     public Page<Advices> list(int pageNo, int pageSize, QueryParam queryParam) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (StringUtils.isNotBlank(queryParam.getUsername())) {

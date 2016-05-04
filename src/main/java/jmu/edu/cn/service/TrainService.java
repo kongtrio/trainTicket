@@ -45,6 +45,12 @@ public class TrainService {
         return (List) trainDao.findAll();
     }
 
+    /**
+     * 根据站点获取对应的列车信息,所有经过该站点的列车
+     *
+     * @param site 站点名称,支持模糊查找
+     * @return
+     */
     public List<Train> getTrainBySite(final String site) {
         if (StringUtils.isBlank(site)) {
             return null;
@@ -63,8 +69,16 @@ public class TrainService {
         return trains;
     }
 
-    //先根据beginSite和endsite获取对应站点,获取到的站点去train_site表中找到对应的列车(列车站点对应表)
-    //找出所有有经过这两个站点的列车后,在排除掉那些方向不对的列车,剩下的就是可以搭乘的所有列车
+    /**
+     * 搜索列车班次
+     * 先根据beginSite和endsite获取对应站点,获取到的站点去train_site表中找到对应的列车(列车站点对应表)
+     * 找出所有有经过这两个站点的列车后,在排除掉那些方向不对的列车,剩下的就是可以搭乘的所有列车
+     *
+     * @param beginSite 起始站
+     * @param endSite   终点站
+     * @param time      时间
+     * @return
+     */
     public List<TrainReport> getTrainDetailList(final String beginSite, String endSite, String time) {
         List<Sites> sites = sitesService.findBySites(Lists.newArrayList(beginSite, endSite));
         if (sites == null || sites.size() != 2) {
@@ -125,7 +139,7 @@ public class TrainService {
         }
 
 
-        //按发车顺序进行排序
+        //按发车时间顺序进行排序
         Collections.sort(trainReports, new Comparator<TrainReport>() {
             public int compare(TrainReport o1, TrainReport o2) {
                 return Integer.compare(DateUtil.getDayTimes(o1.getBeginTime()), DateUtil.getDayTimes(o2.getBeginTime()));
@@ -134,6 +148,8 @@ public class TrainService {
         return trainReports;
     }
 
+
+    //获取某班列车第beginIndex个站点到第endIndex个站点之间的实际余票数
     private int getMinSeatNum(TrainDetail trainDetail, int beginIndex, int endIndex) {
         if (endIndex - 1 > trainDetail.getSeatInt().size()) {
             return 0;
@@ -147,6 +163,7 @@ public class TrainService {
         return minNum;
     }
 
+    //根据列车获取列车和时间详情
     public List<TrainDetail> findByTrains(List<Train> trains, Date date) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(trains)) {
@@ -158,6 +175,7 @@ public class TrainService {
         return trainDetailDao.findAll(spec);
     }
 
+    //分页查询列车信息
     public Page<Train> findAll(int pageNo, int pageSize, QueryParam queryParam) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (StringUtils.isNotBlank(queryParam.getSites())) {
@@ -179,6 +197,7 @@ public class TrainService {
         return trainDao.findAll(spec, page);
     }
 
+    //根据参数分页查询
     public Page<TrainDetail> findAllDetail(int pageNo, int pageSize, QueryParam queryParam, List<Train> trains) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(trains)) {
@@ -207,6 +226,7 @@ public class TrainService {
         return trainDetailDao.findAll(spec, page);
     }
 
+    //根据站点集合查询对应的train_site集合
     public List<TrainSite> findBySiteList(List<Sites> sites) {
         if (CollectionUtils.isEmpty(sites)) {
             return null;
@@ -250,6 +270,7 @@ public class TrainService {
 
     }
 
+    //初始化列车座位
     public static String getInitSeat(int siteSize) {
         List<Integer> seat = Lists.newArrayList();
         for (int i = 0; i < siteSize; i++) {

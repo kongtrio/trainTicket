@@ -34,6 +34,9 @@ public class OrdersService {
     @Autowired
     private TrainService trainService;
 
+    /**
+     * 获取列车未发车的订单
+     */
     public Page<Orders> getUnFinishedOrder(int pageNo, int pageSize, QueryParam queryParam) {
         List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.GT, new Date()));
         filterParam(queryParam, filters);
@@ -43,6 +46,9 @@ public class OrdersService {
         return ordersDao.findAll(spec, page);
     }
 
+    /**
+     * 获取列车已发车的订单
+     */
     public Page<Orders> getFinishedOrder(int pageNo, int pageSize, QueryParam queryParam) {
         List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.LTE, new Date()));
         filterParam(queryParam, filters);
@@ -74,6 +80,7 @@ public class OrdersService {
         return save;
     }
 
+    //保存订单详情
     public void saveDetailList(List<OrdersDetail> ordersDetailList) {
         ordersDetailDao.save(ordersDetailList);
     }
@@ -85,6 +92,7 @@ public class OrdersService {
         ordersDao.delete(orders);
     }
 
+    //删除一个集合的订单详情
     public void deleteOrderDetailList(List<OrdersDetail> ordersDetailList) {
         ordersDetailDao.delete(ordersDetailList);
     }
@@ -105,6 +113,9 @@ public class OrdersService {
         return ordersDao.findByTrainDetail(trainDetail);
     }
 
+    /**
+     * 用来过滤一些参数,有两个地方都用到了这些代码,所以把他们抽了出来
+     */
     private void filterParam(QueryParam queryParam, List<SearchFilter> filters) {
         if (StringUtils.isNotBlank(queryParam.getTimeType()) && StringUtils.isNotBlank(queryParam.getBeginTime()) && StringUtils.isNotBlank(queryParam.getEndTime())) {
             String var = "time";

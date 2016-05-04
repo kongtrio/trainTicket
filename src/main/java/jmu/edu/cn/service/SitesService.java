@@ -30,6 +30,9 @@ public class SitesService {
         return (List) sitesDao.findAll();
     }
 
+    /**
+     * 根据一些参数分页获取数据
+     */
     public Page<Sites> findAll(int pageNo, int pageSize, QueryParam queryParam) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (StringUtils.isNotBlank(queryParam.getSites())) {
@@ -69,6 +72,9 @@ public class SitesService {
         return sitesDao.findBySiteLike("%" + site + "%");
     }
 
+    /**
+     *  根据一些站点集合在获取数据,只要有在这个集合里的站点都会被搜出来
+     */
     public List<Sites> findBySites(List<String> sites) {
         List<SearchFilter> filters = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(sites)) {

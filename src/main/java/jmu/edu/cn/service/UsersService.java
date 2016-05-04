@@ -60,6 +60,13 @@ public class UsersService {
         return contactDao.findAll(spec, page);
     }
 
+    /**
+     * 根据user获取该用户底下所有的联系人信息,分页查询
+     * @param pageNo
+     * @param pageSize
+     * @param user
+     * @return
+     */
     public Page<Contact> findContactsByUser(int pageNo, int pageSize, Users user) {
         List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("users", SearchFilter.Operator.EQ, user));
         Specification<Contact> spec = DynamicSpecifications.bySearchFilter(filters, Contact.class);
@@ -140,6 +147,9 @@ public class UsersService {
         contactDao.delete(contactId);
     }
 
+    /**
+     * 获取当前登陆的用户
+     */
     public Users getCurrentUser() {
         UserDetails userDetails = null;
         Object object = SecurityContextHolder.getContext()

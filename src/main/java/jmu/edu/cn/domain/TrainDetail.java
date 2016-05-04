@@ -94,7 +94,7 @@ public class TrainDetail extends IdEntity {
         }
         int min = Integer.MAX_VALUE;
         List<Integer> seatInt = this.getSeatInt();
-        for (int i = begin; i <= end; i++) {
+        for (int i = begin; i < end; i++) {
             min = seatInt.get(i) < min ? seatInt.get(i) : min;
         }
         return min;
@@ -111,7 +111,7 @@ public class TrainDetail extends IdEntity {
         List<Integer> newSeatInt = Lists.newArrayList();
         for (int i = 0; i < seatInt.size(); i++) {
             Integer integer = seatInt.get(i);
-            if (i <= end && i >= begin) {
+            if (i < end && i >= begin) {
                 if (isAdd) {
                     integer = integer + sellSeatNum;
                 } else {
@@ -122,5 +122,14 @@ public class TrainDetail extends IdEntity {
             newSeatInt.add(integer);
         }
         return Joiner.on(",").join(newSeatInt);
+    }
+
+    public static void main(String[] args) {
+        List<Integer> ss = Lists.newArrayList();
+        ss.add(1);
+        ss.add(2);
+        ss.add(3);
+        List<Integer> integers = ss.subList(0, 0);
+        System.out.println(integers);
     }
 }

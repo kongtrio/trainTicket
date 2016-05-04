@@ -25,6 +25,13 @@ public class MyUserDetailService implements UserDetailsService {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * 校验登录的用户名密码是否合法
+     *
+     * @param username 页面填写的用户名密码
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Transactional(rollbackFor = Exception.class)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users dbUser = usersService.findByUsername(username);
@@ -37,6 +44,7 @@ public class MyUserDetailService implements UserDetailsService {
             SimpleGrantedAuthority simpleGrantedAuthority1 = new SimpleGrantedAuthority(role.getName());
             auths.add(simpleGrantedAuthority1);
         }
+        //返回一个Spring定义的User对象,spring框架会自动和页面填写的账号密码进行对比,判断是否填写正确
         User user = new User(dbUser.getUserName(), dbUser.getPassword(), auths);
         return user;
     }
