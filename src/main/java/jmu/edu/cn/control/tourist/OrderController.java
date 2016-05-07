@@ -1,5 +1,6 @@
 package jmu.edu.cn.control.tourist;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import jmu.edu.cn.control.BaseController;
@@ -12,6 +13,7 @@ import jmu.edu.cn.util.SeatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -140,6 +142,24 @@ public class OrderController extends BaseController {
 
         String[] contactSplit = contactIds.split(",");
         List<Contact> contactByIds = usersService.findContactByIds(string2long(contactSplit));
+
+        //判断这些乘客是否已经买过该时段的车票了
+        List<String> errorContact = Lists.newArrayList();
+        for (Contact contact : contactByIds) {
+            List<OrdersDetail> ordersDetailList = contact.getOrdersDetailList();
+            for (OrdersDetail ordersDetail : ordersDetailList) {
+                Orders userOrder = ordersDetail.getOrders();
+                if ((userOrder.getBeginTime().getTime() >= orders.getBeginTime().getTime() && userOrder.getBeginTime().getTime() <= orders.getEndTime().getTime()) ||
+                        (userOrder.getEndTime().getTime() >= orders.getBeginTime().getTime() && userOrder.getEndTime().getTime() >= orders.getEndTime().getTime())) {
+                    errorContact.add(contact.getName());
+                }
+            }
+        }
+        if (!CollectionUtils.isEmpty(errorContact)) {
+            model.addFlashAttribute("msg", "对不起,订票失败。" + Joiner.on(",").join(errorContact)+"乘客已经购买过该时段的票了");
+            return "redirect:/tourist";
+        }
+
         if (hasSeat.size() <= 0 || realSeatNum < contactSplit.length) {
             model.addFlashAttribute("msg", "对不起,余票不足");
             return "redirect:/tourist";
@@ -198,7 +218,6 @@ public class OrderController extends BaseController {
     }
 
     /**
-     *
      * @param orderId
      * @param model
      * @return

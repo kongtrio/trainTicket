@@ -87,7 +87,9 @@ public class OrdersService {
 
     public void delete(Orders orders) {
         TrainDetail trainDetail = orders.getTrainDetail();
-        trainDetail.setSeatNumber(trainDetail.getSeatNumber() + orders.getOrdersDetails().size());
+        int saleSize = orders.getOrdersDetails().size();
+        String nowSeatSize = trainDetail.calSeat(orders.getBeginIndex(), orders.getEndIndex(), saleSize, true);
+        trainDetail.setSeatNumber(nowSeatSize);
         trainService.saveTrainDetail(trainDetail);
         ordersDao.delete(orders);
     }

@@ -56,12 +56,12 @@
                 <ul>
                     <li>
                         <span>公告标题</span>
-                        <input type="text" class="textbox" name="title" id="add_site" datatype="s2-50"
-                               errormsg="标题名至少2个字符,最多50个字符！"/>
+                        <input type="text" class="textbox" name="title" id="add_site"
+                               nullmsg="标题名不能为空！"/>
                     </li>
                     <li>
                         <span>内容</span>
-                        <textarea class="textarea" style="height:50px;width:80%;" datatype="s2-1000"
+                        <textarea class="textarea" style="height:50px;width:80%;" datatype="*2-1000"
                                   errormsg="内容至少2个字符,最多1000个字符！"
                                   name="content"></textarea>
                     </li>
@@ -95,13 +95,13 @@
                 <ul>
                     <li>
                         <span>公告标题</span>
-                        <input type="text" class="textbox" name="title" id="alter_title" datatype="s2-50"
-                               errormsg="标题名至少2个字符,最多50个字符！"/>
+                        <input type="text" class="textbox" name="title" id="alter_title"
+                               nullmsg="标题名不能为空！"/>
                     </li>
                     <li>
                         <span>内容</span>
                         <textarea class="textarea" id="alter_content" style="height:50px;width:80%;"
-                                  datatype="s2-1000"
+                                  datatype="*2-1000"
                                   errormsg="内容至少2个字符,最多1000个字符！"
                                   name="content"></textarea>
                     </li>

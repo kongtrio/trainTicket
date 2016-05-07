@@ -23,7 +23,7 @@ public class CreatTrainDetailTask {
     @Autowired
     private TrainService trainService;
 
-    //凌晨1点整自动跑这个
+    //凌晨1点整自动跑这个   秒  分钟  小时  天  周
     @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
         logger.info("begin to run the create train detail task");

@@ -69,6 +69,7 @@ public class NotifyController extends BaseController {
     public String addNotify(Notify notify, String expireTimeStr, RedirectAttributes model) {
         Date expireTime = DateUtil.parseDate(expireTimeStr, "yyyy-MM-dd");
         notify.setExpireTime(expireTime);
+        notify.setInsertTime(new Date());
         notifyService.saveOrUpdate(notify);
         model.addFlashAttribute("notifyMsg", "添加公告成功！");
         return "redirect:/admin/notify";

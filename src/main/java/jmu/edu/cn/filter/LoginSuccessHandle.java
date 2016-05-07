@@ -23,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +44,8 @@ public class LoginSuccessHandle extends SimpleUrlAuthenticationSuccessHandler im
                 .getPrincipal();
         if (userDetails != null) {
             Users users = usersService.findByUsername(userDetails.getUsername());
+            users.setLastLoginTime(new Date());
+            usersService.update(users);
             request.getSession().setAttribute("user", users);
         }
 

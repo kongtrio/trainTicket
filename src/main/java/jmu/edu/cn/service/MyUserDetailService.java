@@ -39,6 +39,7 @@ public class MyUserDetailService implements UserDetailsService {
             logger.info("{} user not found in db", username);
             throw new UsernameNotFoundException("");
         }
+
         Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
         for (Role role : dbUser.getRoles()) {
             SimpleGrantedAuthority simpleGrantedAuthority1 = new SimpleGrantedAuthority(role.getName());

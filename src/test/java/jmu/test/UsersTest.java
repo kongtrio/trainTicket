@@ -40,11 +40,13 @@ public class UsersTest {
     }
 
     @Test
-//    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void getTrain() {
-        ordersService.update(10l);
+//        ordersService.update(10l);
 //        List<TrainDetail> trainDetailList = trainService.getTrainDetailList("福州站", "厦门站", "");
 //        System.out.println("begin--------------------");
+        Contact contactById = usersService.findContactById(1);
+        System.out.println("ddd");
     }
 
 

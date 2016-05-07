@@ -54,7 +54,7 @@
         <b:property name="defaultFailureUrl" value="/genal/login?msg=errorUser"></b:property>
     </b:bean>
 
-
+    <!--验证用户-->
     <b:bean id="myUserService" class="jmu.edu.cn.service.MyUserDetailService"></b:bean>
 
 </b:beans>
