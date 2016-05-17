@@ -1,8 +1,10 @@
 package jmu.edu.cn.control.user;
 
+import jmu.edu.cn.control.BaseController;
 import jmu.edu.cn.domain.Orders;
 import jmu.edu.cn.domain.QueryParam;
 import jmu.edu.cn.domain.TrainDetail;
+import jmu.edu.cn.domain.Users;
 import jmu.edu.cn.service.OrdersService;
 import jmu.edu.cn.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @RequestMapping("/user")
 @Controller("user_orderController")
-public class OrderController {
+public class OrderController extends BaseController {
     @Autowired
     private OrdersService ordersService;
     @Autowired
@@ -39,6 +41,8 @@ public class OrderController {
     public String unFinished(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                              @RequestParam(required = false, defaultValue = "4") Integer pageSize,
                              QueryParam queryParam, Model model, @ModelAttribute("msg") String msg) {
+        Users user = (Users) request.getSession().getAttribute("user");
+        queryParam.setUsers(user);
         Page<Orders> unFinishedOrder = ordersService.getUnFinishedOrder(pageNo, pageSize, queryParam);
         model.addAttribute("orders", unFinishedOrder);
         model.addAttribute("param", queryParam);
@@ -57,6 +61,8 @@ public class OrderController {
     public String finishedOrder(@RequestParam(required = false, defaultValue = "1") Integer pageNo,
                                 @RequestParam(required = false, defaultValue = "6") Integer pageSize,
                                 QueryParam queryParam, Model model) {
+        Users user = (Users) request.getSession().getAttribute("user");
+        queryParam.setUsers(user);
         Page<Orders> unFinishedOrder = ordersService.getFinishedOrder(pageNo, pageSize, queryParam);
         model.addAttribute("orders", unFinishedOrder);
         model.addAttribute("param", queryParam);

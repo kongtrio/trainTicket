@@ -66,4 +66,28 @@ public class UserController extends BaseController {
         model.addFlashAttribute("msg", "密码修改成功");
         return "redirect:/user";
     }
+
+    /**
+     * 跳转到修改电话号码的界面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/alterTel", method = RequestMethod.GET)
+    public String alterTel(@ModelAttribute("notifyMsg") String notifyMsg) {
+        return "/user/alterTel";
+    }
+
+    /**
+     * 修改密码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/alterTel", method = RequestMethod.POST)
+    public String alterTel(RedirectAttributes model, String telphone) {
+        Users user = (Users) request.getSession().getAttribute("user");
+        user.setTelphone(telphone);
+        usersService.save(user);
+        model.addFlashAttribute("msg", "电话号码修改成功");
+        return "redirect:/user";
+    }
 }

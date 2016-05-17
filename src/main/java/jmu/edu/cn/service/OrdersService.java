@@ -38,7 +38,7 @@ public class OrdersService {
      * 获取列车未发车的订单
      */
     public Page<Orders> getUnFinishedOrder(int pageNo, int pageSize, QueryParam queryParam) {
-        List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.GT, new Date()));
+        List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.GT, new Date()), new SearchFilter("users", SearchFilter.Operator.EQ, queryParam.getUsers()));
         filterParam(queryParam, filters);
         Specification<Orders> spec = DynamicSpecifications.bySearchFilter(filters, Orders.class);
         Sort.Order order = new Sort.Order(Sort.Direction.DESC, "time");
@@ -50,7 +50,7 @@ public class OrdersService {
      * 获取列车已发车的订单
      */
     public Page<Orders> getFinishedOrder(int pageNo, int pageSize, QueryParam queryParam) {
-        List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.LTE, new Date()));
+        List<SearchFilter> filters = Lists.newArrayList(new SearchFilter("beginTime", SearchFilter.Operator.LTE, new Date()), new SearchFilter("users", SearchFilter.Operator.EQ, queryParam.getUsers()));
         filterParam(queryParam, filters);
         Specification<Orders> spec = DynamicSpecifications.bySearchFilter(filters, Orders.class);
         Sort.Order order = new Sort.Order(Sort.Direction.DESC, "time");

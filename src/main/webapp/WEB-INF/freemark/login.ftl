@@ -94,7 +94,7 @@
 
             <form class="loginform" action="${basePath}/j_spring_security_check" method="post">
                 <div class="fm-item">
-                    <label for="logonId" class="form-label">MISS系统登陆：</label>
+                    <label for="logonId" class="form-label"  style="color: black">MISS系统登陆：</label>
                     <input type="text" maxlength="100" id="username" class="i-text" name="j_username"
                            placeholder="请输入账号" datatype="s4-18" errormsg="用户名至少4个字符,最多18个字符！">
 
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="fm-item">
-                    <label for="logonId" class="form-label">登陆密码：</label>
+                    <label for="logonId" class="form-label" style="color: black">登陆密码：</label>
                     <input type="password" maxlength="100" id="password" class="i-text" datatype="*4-16"
                            name="j_password" placeholder="请输入密码" errormsg="密码范围在4~16位之间！">
 
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="fm-item pos-r">
-                    <label for="logonId" class="form-label">验证码</label>
+                    <label for="logonId" class="form-label"  style="color: black">验证码</label>
                     <input type="text" placeholder="输入验证码" maxlength="100" id="yzm" class="i-text yzm"
                            name="validateCode" datatype="s4-4" errormsg="验证码的长度必须为4位！"
                            nullmsg="请输入验证码！">

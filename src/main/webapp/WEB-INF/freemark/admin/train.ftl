@@ -38,7 +38,7 @@
                 <td>
                 <#--<a href="#"-->
                 <#--onclick="showAlterDiv(${data.id?c},'${data.name!''}','${data.users.userName}','${data.telphone!''}','${data.identityCard!''}')">修改联系人</a>-->
-                    <a href="${basePath}/admin/delTrain/${data.id?c}" class="inner_btn">删除站点</a>
+                    <a href="${basePath}/admin/delTrain/${data.id?c}" class="inner_btn">删除车次</a>
                 </td>
             </tr>
             </#list>
