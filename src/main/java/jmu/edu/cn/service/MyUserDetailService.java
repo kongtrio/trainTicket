@@ -1,7 +1,5 @@
 package jmu.edu.cn.service;
 
-import jmu.edu.cn.domain.Role;
-import jmu.edu.cn.domain.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
