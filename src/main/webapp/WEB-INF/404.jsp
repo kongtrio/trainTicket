@@ -7,7 +7,7 @@
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     %>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>404错误</title>
+    <title>404</title>
     <link rel="stylesheet" href="<%=basePath%>/bootstrap-3.3.5-dist/css/bootstrap-combined.min.css">
     <link rel="stylesheet" href="<%=basePath%>/css/tourist.css">
     <script src="<%=basePath%>/js/jquery.js"></script>
